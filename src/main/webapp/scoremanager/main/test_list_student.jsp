@@ -108,7 +108,7 @@
     <!-- ===================== RESULT TABLE（学生別検索） ===================== -->
     <c:if test="${not empty testList}">
         <div class="px-4 mb-2">
-            学籍番号：${studentNo}
+             氏名：${studentName}（${studentNo}）
         </div>
 
         <div class="px-4 w-100">

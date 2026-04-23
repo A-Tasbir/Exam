@@ -2,9 +2,10 @@ package scoremanager.main;
 
 import java.util.List;
 
+import bean.Student;
 import bean.Test;
+import dao.StudentDao;
 import dao.TestDao;
-import dao.TestListStudentDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import tool.Action;
@@ -20,26 +21,37 @@ public class TestListStudentExecuteAction extends Action {
         // 入力チェック
         if (studentNo == null || studentNo.isEmpty()) {
             req.setAttribute("errorMessage", "学籍番号を入力してください");
-            req.getRequestDispatcher("test_list.jsp").forward(req, res);
+            req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
             return;
         }
 
-        // 学生存在チェック
-        TestListStudentDao checkDao = new TestListStudentDao();
-        if (!checkDao.exists(studentNo)) {
+        // ✅ 学生取得（STUDENTテーブル）
+        StudentDao studentDao = new StudentDao();
+        Student student = studentDao.get(studentNo);
+
+        if (student == null) {
             req.setAttribute("errorMessage", "該当する学生が存在しません");
-            req.getRequestDispatcher("test_list.jsp").forward(req, res);
+            req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
             return;
         }
 
-        // ★ 成績取得（これが今まで無かった）
+        // ✅ 氏名をセット
+        req.setAttribute("studentNo", studentNo);
+        req.setAttribute("studentName", student.getName());
+
+        // 成績取得（TESTテーブル）
         TestDao testDao = new TestDao();
         List<Test> list = testDao.findByStudentNo(studentNo);
 
-        // JSP に渡す
-        req.setAttribute("studentNo", studentNo);
-        req.setAttribute("testList", list);
+        // 成績なし
+        if (list.isEmpty()) {
+            req.setAttribute("errorMessage", "成績情報が存在しませんでした");
+            req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
+            return;
+        }
 
-        req.getRequestDispatcher("test_list.jsp").forward(req, res);
+        // 成績あり
+        req.setAttribute("testList", list);
+        req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
     }
 }
