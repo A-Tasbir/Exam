@@ -100,6 +100,10 @@ public class ClassNumDao extends Dao {
 
         return result;
     }
+    
+    public List<String> filter(String schoolCd) throws Exception {
+        return getClassNumsBySchool(schoolCd);
+    }
 
     /* =====================================================
      * EXISTS CHECK
