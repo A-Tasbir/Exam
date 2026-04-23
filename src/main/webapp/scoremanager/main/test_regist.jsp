@@ -12,6 +12,7 @@
     				<div class="text-danger mb-3">${sessionScope.registError}</div>
     				<c:remove var="registError" scope="session" />
 				</c:if>
+				
 				<c:if test="${!empty error}">
     				<div class="text-danger mb-3">${error}</div>
 				</c:if>
@@ -59,6 +60,9 @@
                 </form>
 
                 <%-- 検索結果 --%>
+                <c:if test="${!empty searchError}">
+    				<div class="text-danger px-3 mb-3">${searchError}</div>
+				</c:if>
                 <c:if test="${!empty tests}">
                     <div class="px-3 mb-2">科目：${subjectName}（${no}回）</div>
                     <form method="post" action="TestRegistExecute.action">
