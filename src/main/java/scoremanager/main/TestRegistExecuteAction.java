@@ -44,6 +44,8 @@ public class TestRegistExecuteAction extends Action {
 
             int entYear = Integer.parseInt(entYearStr);
             int no = Integer.parseInt(noStr);
+            
+           
 
             // 学生一覧取得
             List<Student> students = new StudentDao().filter(schoolCd, entYear, classNum, true);
@@ -71,6 +73,22 @@ public class TestRegistExecuteAction extends Action {
             // 科目名取得
             Subject subject = new SubjectDao().get(schoolCd, subjectCd);
             String subjectName = subject != null ? subject.getName() : "";
+            
+            if (tests.isEmpty()) {
+                req.setAttribute("searchError", "データがありません。");
+            }
+            
+            int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+            List<Integer> entYearSet = new ArrayList<>();
+            for (int i = currentYear - 10; i <= currentYear + 1; i++) entYearSet.add(i);
+            List<String> classNumSet = new dao.ClassNumDao().filter(schoolCd);
+            List<bean.Subject> subjectSet = new SubjectDao().filter(schoolCd);
+            List<Integer> noSet = new ArrayList<>();
+            for (int i = 1; i <= 10; i++) noSet.add(i);
+            req.setAttribute("entYearSet", entYearSet);
+            req.setAttribute("classNumSet", classNumSet);
+            req.setAttribute("subjectSet", subjectSet);
+            req.setAttribute("noSet", noSet);
 
             req.setAttribute("tests", tests);
             req.setAttribute("subjectName", subjectName);
