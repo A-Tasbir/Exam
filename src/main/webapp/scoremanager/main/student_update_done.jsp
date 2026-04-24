@@ -9,7 +9,7 @@
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">学生変更完了</h2>
 			<div class="px-4">
-				<p class="text-center" style="background-color:#66CC99">学生情報を変更しました</p>
+				<div class="alert alert-success text-center">変更が完了しました。</div>
 				<a href="StudentList.action">学生一覧へ戻る</a>
 			</div>
 		</section>

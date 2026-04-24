@@ -11,6 +11,9 @@ public class Test implements Serializable {
     private int point;
     private String classNum;
 
+    // ✅ ADDED ONLY THIS
+    private String subjectName;
+
     public String getStudentNo() { return studentNo; }
     public void setStudentNo(String studentNo) { this.studentNo = studentNo; }
 
@@ -28,4 +31,8 @@ public class Test implements Serializable {
 
     public String getClassNum() { return classNum; }
     public void setClassNum(String classNum) { this.classNum = classNum; }
+
+    // ✅ ADDED ONLY THIS
+    public String getSubjectName() { return subjectName; }
+    public void setSubjectName(String subjectName) { this.subjectName = subjectName; }
 }

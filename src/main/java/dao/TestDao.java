@@ -98,9 +98,16 @@ public class TestDao extends Dao {
         Connection con = getConnection();
         List<Test> list = new ArrayList<>();
 
-        String sql = "select * from TEST where STUDENT_NO = ? order by SUBJECT_CD, NO";
+        String sql =
+            "SELECT t.STUDENT_NO, t.SUBJECT_CD, s.NAME AS SUBJECT_NAME, " +
+            "t.SCHOOL_CD, t.NO, t.POINT, t.CLASS_NUM " +
+            "FROM TEST t " +
+            "JOIN SUBJECT s ON t.SUBJECT_CD = s.CD " +
+            "WHERE t.STUDENT_NO = ? " +
+            "ORDER BY t.SUBJECT_CD, t.NO";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setString(1, studentNo);
 
             ResultSet rs = ps.executeQuery();
@@ -108,6 +115,7 @@ public class TestDao extends Dao {
                 Test t = new Test();
                 t.setStudentNo(rs.getString("STUDENT_NO"));
                 t.setSubjectCd(rs.getString("SUBJECT_CD"));
+                t.setSubjectName(rs.getString("SUBJECT_NAME")); // ✅ ONLY ADDITION
                 t.setSchoolCd(rs.getString("SCHOOL_CD"));
                 t.setNo(rs.getInt("NO"));
                 t.setPoint(rs.getInt("POINT"));

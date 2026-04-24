@@ -8,10 +8,7 @@
 	<c:param name="content">
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">学生登録完了</h2>
-			<div class="px-4">
-				<p class="text-center" style="background-color:#66CC99">学生情報を登録しました</p>
-				
-			</div>
+			<div class="alert alert-success text-center">登録が完了しました。</div>
 			<div class="mt-5 px-4">
 
    			 <a href="StudentCreate.action" class="me-5">

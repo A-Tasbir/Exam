@@ -12,13 +12,13 @@
 
     <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center bg-secondary bg-opacity-10 py-2 px-4 mb-3 w-100">
-        <h2 class="h3 mb-0 fw-normal">成績参照</h2>
+        <h2 class="h3 mb-0 fw-normal">成績検索</h2>
     </div>
 
     <!-- ===================== SEARCH AREA ===================== -->
     <div class="px-4 mb-3 w-100 pb-3 pt-3" style="border:1px solid #000;">
 
-        <!-- ===== TOP SEARCH（科目別｜そのまま）===== -->
+        <!-- ===== TOP SEARCH（科目別）===== -->
         <form method="get" action="TestListSubjectExecute.action">
             <div class="d-flex align-items-center gap-4 mb-3">
 
@@ -62,6 +62,7 @@
                             検索
                         </button>
                     </div>
+
                 </div>
             </div>
         </form>
@@ -80,7 +81,6 @@
                     <label class="form-label mb-1">学籍番号</label>
                     <input type="text"
                            name="studentNo"
-                           value="${studentNo}"
                            class="form-control"
                            style="width:220px; height:38px;">
                 </div>
@@ -95,45 +95,8 @@
 
             </div>
         </form>
+
     </div>
-    <!-- ===================== SEARCH AREA END ===================== -->
-
-    <!-- ===== ERROR MESSAGE ===== -->
-    <c:if test="${not empty errorMessage}">
-        <div class="px-4 mb-3 text-danger">
-            <div>${errorMessage}</div>
-        </div>
-    </c:if>
-
-    <!-- ===================== RESULT TABLE（学生別検索） ===================== -->
-    <c:if test="${not empty testList}">
-        <div class="px-4 mb-2">
-            学籍番号：${studentNo}
-        </div>
-
-        <div class="px-4 w-100">
-            <table class="table table-bordered table-hover w-100">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>科目コード</th>
-                        <th>回数</th>
-                        <th>点数</th>
-                        <th>クラス</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="t" items="${testList}">
-                        <tr>
-                            <td>${t.subjectCd}</td>
-                            <td>${t.no}</td>
-                            <td>${t.point}</td>
-                            <td>${t.classNum}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-    </c:if>
 
     <!-- BACK -->
     <div class="px-4 mt-3">
