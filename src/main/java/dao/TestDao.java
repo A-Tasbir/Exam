@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.SubjectTestRow;
 import bean.Test;
 
 public class TestDao extends Dao {
@@ -125,7 +126,57 @@ public class TestDao extends Dao {
         } finally {
             con.close();
         }
+		return list;
+    }
+    public List<SubjectTestRow> getSubjectTestList(
+            String schoolCd,
+            String entYear,
+            String classNum,
+            String subjectCd)
+            throws Exception {
 
+        String sql =
+            "SELECT s.ENT_YEAR, s.CLASS_NUM, s.STUDENT_NO, s.NAME, " +
+            "MAX(CASE WHEN t.NO = 1 THEN t.POINT END) AS POINT1, " +
+            "MAX(CASE WHEN t.NO = 2 THEN t.POINT END) AS POINT2 " +
+            "FROM STUDENT s " +
+            "LEFT JOIN TEST t " +
+            "ON s.STUDENT_NO = t.STUDENT_NO " +
+            "AND t.SUBJECT_CD = ? " +
+            "WHERE s.SCHOOL_CD = ? " +   // ★追加
+            "AND s.ENT_YEAR = ? " +
+            "AND s.CLASS_NUM = ? " +
+            "GROUP BY s.ENT_YEAR, s.CLASS_NUM, s.STUDENT_NO, s.NAME " +
+            "ORDER BY s.STUDENT_NO";
+
+        List<SubjectTestRow> list = new ArrayList<>();
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, subjectCd);
+            ps.setString(2, schoolCd);
+            ps.setString(3, entYear);
+            ps.setString(4, classNum);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                SubjectTestRow row = new SubjectTestRow();
+
+                // ★ Stringで統一
+                row.setEntYear(rs.getString("ENT_YEAR"));
+                row.setClassNum(rs.getString("CLASS_NUM"));
+                row.setStudentNo(rs.getString("STUDENT_NO"));
+                row.setStudentName(rs.getString("NAME"));
+
+                // ★ メソッド名合わせる
+                row.setScore1((Integer) rs.getObject("POINT1"));
+                row.setScore2((Integer) rs.getObject("POINT2"));
+
+                list.add(row);
+            }
+        }
         return list;
     }
 }
