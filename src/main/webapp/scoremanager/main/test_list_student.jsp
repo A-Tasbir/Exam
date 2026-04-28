@@ -27,22 +27,39 @@
 
                     <div>
                         <label class="form-label mb-1">入学年度</label>
-                        <select name="admissionYear" class="form-select" style="width:140px; height:38px;">
+                        <select name="admissionYear"
+                                class="form-select"
+                                style="width:140px; height:38px;">
                             <option value="">----------</option>
+                            <c:forEach var="y" items="${entYearList}">
+            					<option value="${y}">${y}</option>
+        					</c:forEach>
                         </select>
                     </div>
 
                     <div>
                         <label class="form-label mb-1">クラス</label>
-                        <select name="classNo" class="form-select" style="width:140px; height:38px;">
+                        <select name="classNo"
+                                class="form-select"
+                                style="width:140px; height:38px;">
                             <option value="">----------</option>
+                            <c:forEach var="c" items="${classNumList}">
+					            <option value="${c}">${c}</option>
+					        </c:forEach>
                         </select>
                     </div>
 
                     <div>
                         <label class="form-label mb-1">科目</label>
-                        <select name="subjectCode" class="form-select" style="width:300px; height:38px;">
+                        <select name="subjectCode"
+                                class="form-select"
+                                style="width:300px; height:38px;">
                             <option value="">----------</option>
+                             <c:forEach var="sub" items="${subjectList}">
+						        <option value="${sub.cd}">
+						            ${sub.name}
+						        </option>
+						    </c:forEach>
                         </select>
                     </div>
 

@@ -12,7 +12,7 @@
 
     <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center bg-secondary bg-opacity-10 py-2 px-4 mb-3 w-100">
-        <h2 class="h3 mb-0 fw-normal">成績検索</h2>
+        <h2 class="h3 mb-0 fw-normal">成績一覧(科目)</h2>
     </div>
 
     <!-- ===================== SEARCH AREA ===================== -->
@@ -46,7 +46,7 @@
                                 class="form-select"
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
-                            <c:forEach var="c" items="${classList}">
+                            <c:forEach var="c" items="${classNumList}">
 					            <option value="${c}">${c}</option>
 					        </c:forEach>
                         </select>
@@ -106,9 +106,33 @@
 
             </div>
         </form>
+        
 
     </div>
-
+	<table class="table">
+	    <thead>
+	        <tr>
+	            <th>入学年度</th>
+	            <th>クラス</th>
+	            <th>学生番号</th>
+	            <th>氏名</th>
+	            <th>1回</th>
+	            <th>2回</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <c:forEach var="row" items="${testList}">
+	            <tr>
+	                <td>${row.entYear}</td>
+	                <td>${row.classNum}</td>
+	                <td>${row.studentNo}</td>
+	                <td>${row.studentName}</td>
+	                <td>${row.score1}</td>
+	                <td>${row.score2}</td>
+	            </tr>
+	        </c:forEach>
+	    </tbody>
+	</table>
     <!-- BACK -->
     <div class="px-4 mt-3">
         <a href="Menu.action">メニューへ戻る</a>
