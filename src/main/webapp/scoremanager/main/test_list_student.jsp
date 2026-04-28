@@ -1,7 +1,5 @@
-    pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
 
 <c:import url="/common/base.jsp">
     <c:param name="title">得点管理システム</c:param>
@@ -32,8 +30,8 @@
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
                             <c:forEach var="y" items="${entYearList}">
-            					<option value="${y}">${y}</option>
-        					</c:forEach>
+                                <option value="${y}">${y}</option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -44,8 +42,8 @@
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
                             <c:forEach var="c" items="${classNumList}">
-					            <option value="${c}">${c}</option>
-					        </c:forEach>
+                                <option value="${c}">${c}</option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -55,11 +53,11 @@
                                 class="form-select"
                                 style="width:300px; height:38px;">
                             <option value="">----------</option>
-                             <c:forEach var="sub" items="${subjectList}">
-						        <option value="${sub.cd}">
-						            ${sub.name}
-						        </option>
-						    </c:forEach>
+                            <c:forEach var="sub" items="${subjectList}">
+                                <option value="${sub.cd}">
+                                    ${sub.name}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -69,7 +67,7 @@
                         </button>
                     </div>
 
-                 </div>
+                </div>
             </div>
         </form>
 
@@ -110,16 +108,16 @@
         </div>
     </c:if>
 
-    <!-- RESULT TABLE (UPDATED) -->
+    <!-- RESULT TABLE -->
     <c:if test="${not empty testList}">
         <div class="px-4 w-100">
             <table class="table table-bordered table-hover w-100">
                 <thead class="table-secondary">
                     <tr>
                         <th style="width:40%;">科目名</th>
-						<th style="width:20%;">科目コード</th>
-						<th style="width:20%;">回数</th>
-						<th style="width:20%;">点数</th>
+                        <th style="width:20%;">科目コード</th>
+                        <th style="width:20%;">回数</th>
+                        <th style="width:20%;">点数</th>
                     </tr>
                 </thead>
                 <tbody>
