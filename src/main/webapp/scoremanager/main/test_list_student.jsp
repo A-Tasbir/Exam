@@ -41,7 +41,7 @@
                                 class="form-select"
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
-                            <c:forEach var="c" items="${classNumList}">
+                            <c:forEach var="c" items="${classList}">
                                 <option value="${c}">${c}</option>
                             </c:forEach>
                         </select>
