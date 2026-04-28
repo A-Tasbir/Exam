@@ -35,7 +35,10 @@
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
                             <c:forEach var="y" items="${entYearList}">
-            					<option value="${y}">${y}</option>
+            					<option value="${y}"
+            					${selectedF1 eq y ? 'selected' : '' }>
+            					${y}
+            					</option>
         					</c:forEach>
                         </select>
                     </div>
@@ -46,8 +49,11 @@
                                 class="form-select"
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
-                            <c:forEach var="c" items="${classNumList}">
-					            <option value="${c}">${c}</option>
+                            <c:forEach var="c" items="${classList}">
+					            <option value="${c}"
+					            ${selectedF2 eq c ? 'selected' : ''}>
+					            ${c}
+					            </option>
 					        </c:forEach>
                         </select>
                     </div>
@@ -59,9 +65,7 @@
                                 style="width:300px; height:38px;">
                             <option value="">----------</option>
                              <c:forEach var="sub" items="${subjectList}">
-						        <option value="${sub.cd}">
-						            ${sub.name}
-						        </option>
+						        <option value="${sub.cd}"${selectedF3 eq sub.cd ? 'selected' : ''}>${sub.name}</option>
 						    </c:forEach>
                         </select>
                     </div>
