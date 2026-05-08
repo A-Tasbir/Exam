@@ -28,33 +28,38 @@ public class TestListSubjectExecuteAction extends Action {
         String classNum = req.getParameter("classNo");
         String subjectCd = req.getParameter("subjectCode");
 
-        // keep search state (IMPORTANT for JSP selected values)
         req.setAttribute("selectedF1", entYear);
         req.setAttribute("selectedF2", classNum);
         req.setAttribute("selectedF3", subjectCd);
 
-        // if all empty → show message instead of query
-        if (isBlank(entYear) && isBlank(classNum) && isBlank(subjectCd)) {
-            req.setAttribute("subjectErrorMessage", "入学年度とクラスと科目を選択してください");
-
-            setSelectOptions(req, schoolCd);
-
-            // IMPORTANT: stay on main JSP
-            req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
-            return;
-        }
-
-        TestListSubjectDao dao = new TestListSubjectDao();
-
-        List<SubjectTestRow> list =
-            dao.filter(schoolCd, entYear, classNum, subjectCd);
-
-        // ✔ FIX: use separate attribute (NO collision)
-        req.setAttribute("subjectTestList", list);
-
         setSelectOptions(req, schoolCd);
 
-        // IMPORTANT: stay on main JSP (not separate page)
+        List<SubjectTestRow> list = new ArrayList<>();
+
+        // ================= EMPTY INPUT CHECK =================
+        if (isBlank(entYear) && isBlank(classNum) && isBlank(subjectCd)) {
+
+            req.setAttribute(
+                "subjectErrorMessage",
+                "入学年度とクラスと科目を選択してください"
+            );
+
+        } else {
+
+            TestListSubjectDao dao = new TestListSubjectDao();
+            list = dao.filter(schoolCd, entYear, classNum, subjectCd);
+
+            // ================= NO RESULT CHECK =================
+            if (list == null || list.isEmpty()) {
+                req.setAttribute(
+                    "subjectErrorMessage",
+                    "学生情報が存在しませんでした"
+                );
+            }
+        }
+
+        req.setAttribute("subjectTestList", list);
+
         req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
     }
 
@@ -62,9 +67,11 @@ public class TestListSubjectExecuteAction extends Action {
 
         int currentYear = java.time.Year.now().getValue();
         List<Integer> entYearList = new ArrayList<>();
+
         for (int y = currentYear - 10; y <= currentYear + 10; y++) {
             entYearList.add(y);
         }
+
         req.setAttribute("entYearList", entYearList);
 
         ClassNumDao classNumDao = new ClassNumDao();

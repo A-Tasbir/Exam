@@ -116,7 +116,7 @@
 
     </div>
 
-    <!-- ERROR MESSAGE -->
+    <!-- ===================== ERROR MESSAGE ===================== -->
     <c:if test="${not empty subjectErrorMessage}">
         <div class="px-4 mb-3 text-dark">
             <div>${subjectErrorMessage}</div>
