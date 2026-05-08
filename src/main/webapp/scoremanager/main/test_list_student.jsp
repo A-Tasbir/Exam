@@ -81,7 +81,7 @@
                 <div>
                     <label class="form-label mb-1">学籍番号</label>
                     <input type="text" name="studentNo" value="${studentNo}"
-                           class="form-control" style="width:220px; height:38px;">
+                           class="form-control" style="width:220px; height:38px;" required>
                 </div>
 
                 <div class="pt-4">
@@ -92,19 +92,20 @@
 
             </div>
         </form>
-    </div>
 
+        <!-- ERROR MESSAGE (correct placement + red color) -->
+       
+
+    </div>
+	 <c:if test="${not empty errorMessage}">
+            <div class="px-4 mt-2 text-dark fw-bold">
+                ${errorMessage}
+            </div>
+        </c:if>
     <!-- NAME -->
     <c:if test="${not empty studentName}">
         <div class="px-4 mb-2">
             氏名：${studentName}（${studentNo}）
-        </div>
-    </c:if>
-
-    <!-- ERROR MESSAGE -->
-    <c:if test="${not empty errorMessage}">
-        <div class="px-4 mb-3 text-dark">
-            <div>${errorMessage}</div>
         </div>
     </c:if>
 
