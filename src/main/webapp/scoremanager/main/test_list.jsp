@@ -93,7 +93,7 @@
                     <input type="text"
                            name="studentNo"
                            class="form-control"
-                           style="width:220px; height:38px;">
+                           style="width:220px; height:38px;"required>
                 </div>
 
                 <div class="pt-4">
