@@ -81,7 +81,7 @@
                 </div>
             </div>
         </form>
-
+        
         <hr style="border-top:1px solid #000; opacity:1; margin:16px 0;">
 
         <!-- ===== BOTTOM SEARCH（学生別）===== -->
@@ -110,9 +110,16 @@
 
             </div>
         </form>
-        
-
     </div>
+    
+    <c:if test="${not empty errorMessage}">
+        	<div class="px-4 mb-3 text-dark">
+        		<div>${errorMessage}</div>
+    		</div>
+	</c:if>
+	
+	<c:if test="${testList.size() > 0}">
+	<div class="px-4 w-100">
 	<table class="table">
 	    <thead>
 	        <tr>
@@ -137,6 +144,9 @@
 	        </c:forEach>
 	    </tbody>
 	</table>
+	</div>
+	</c:if>
+	
     <!-- BACK -->
     <div class="px-4 mt-3">
         <a href="Menu.action">メニューへ戻る</a>
