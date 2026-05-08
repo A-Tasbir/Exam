@@ -15,22 +15,13 @@
     			<a href="StudentCsvUpload.action">CSVファイルを取り込む</a>
 			</div>
 
-			<%-- エラーメッセージ --%>
-			<c:if test="${errors.size() > 0}">
-				<div class="px-4 mb-2">
-					<ul class="text-danger">
-						<c:forEach var="error" items="${errors}">
-							<li>${error}</li>
-						</c:forEach>
-					</ul>
-				</div>
-			</c:if>
+			
 
 			<form action="StudentCreateExecute.action" method="post" class="px-4">
 				<div class="mb-3">
 					<label class="form-label">入学年度 <span class="text-danger">*</span></label>
 					<select class="form-select w-100" name="entYear">
-						<option value="">選択してください</option>
+						<option value="0">----------</option>
 						<c:forEach begin="${currentYear - 10}" end="${currentYear + 10}" var="year">
     						<option value="${year}"
         					<c:if test="${entYear == year}">selected</c:if>>
@@ -38,16 +29,25 @@
     						</option>
 						</c:forEach>
 					</select>
+					 <c:forEach var="error" items="${errors}">
+        				<c:if test="${error == '入学年度を選択してください'}">
+            			<div class="text-danger small mt-1">${error}</div>
+        				</c:if>
+    				</c:forEach>
+
 				</div>
 				<div class="mb-3">
 					<label class="form-label">学生番号 <span class="text-danger">*</span></label>
-					<input type="text" class="form-control w-100" name="no"
-						value="${no}" maxlength="10" required />
+					<input type="text" name="no" class="form-control" value="${no}" placeholder="学生番号を入力してください" required />
+					<c:forEach var="error" items="${errors}">
+						<c:if test="${error == '学生番号が重複しています'}">
+							<div class="text-danger small mt-1">${error}</div>
+						</c:if>
+					</c:forEach>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">氏名 <span class="text-danger">*</span></label>
-					<input type="text" class="form-control w-100" name="name"
-						value="${name}" maxlength="10" required />
+					<input type="text" name="name" class="form-control" value="${name}" placeholder="氏名を入力してください"  required />
 				</div>
 				
 				<div class="mb-3">
