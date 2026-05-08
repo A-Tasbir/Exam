@@ -1,10 +1,12 @@
 package scoremanager.main;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
 import bean.Student;
 import bean.Teacher;
+import dao.ClassNumDao;
 import dao.StudentDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +34,7 @@ public class StudentCreateExecuteAction extends Action {
 
 		// ビジネスロジック 4
 		// 入学年度の未入力チェック
-		if (entYearStr == null || entYearStr.isEmpty()) {
+		if (entYearStr == null || entYearStr.isEmpty() || entYearStr.equals("0")){
 			errors.add("入学年度を選択してください");
 		}
 
@@ -52,6 +54,16 @@ public class StudentCreateExecuteAction extends Action {
 			req.setAttribute("entYear", entYearStr);
 			req.setAttribute("classNum", classNum);
 			req.setAttribute("isAttend", isAttendStr);
+			
+			int currentYear = Year.now().getValue();
+            req.setAttribute("currentYear", currentYear);
+
+            if (teacher != null) {
+                String schoolCd = teacher.getSchool().getCd();
+                ClassNumDao classDao = new ClassNumDao();
+                List<String> class_num_set = classDao.getClassNumsBySchool(schoolCd);
+                req.setAttribute("class_num_set", class_num_set);
+            }
 			url = "student_create.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
 			return;
