@@ -35,11 +35,11 @@
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
                             <c:forEach var="y" items="${entYearList}">
-            					<option value="${y}"
-            					${selectedF1 eq y ? 'selected' : '' }>
-            					${y}
-            					</option>
-        					</c:forEach>
+                                <option value="${y}"
+                                ${selectedF1 eq y ? 'selected' : ''}>
+                                ${y}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -50,11 +50,11 @@
                                 style="width:140px; height:38px;">
                             <option value="">----------</option>
                             <c:forEach var="c" items="${classList}">
-					            <option value="${c}"
-					            ${selectedF2 eq c ? 'selected' : ''}>
-					            ${c}
-					            </option>
-					        </c:forEach>
+                                <option value="${c}"
+                                ${selectedF2 eq c ? 'selected' : ''}>
+                                ${c}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -64,9 +64,12 @@
                                 class="form-select"
                                 style="width:300px; height:38px;">
                             <option value="">----------</option>
-                             <c:forEach var="sub" items="${subjectList}">
-						        <option value="${sub.cd}"${selectedF3 eq sub.cd ? 'selected' : ''}>${sub.name}</option>
-						    </c:forEach>
+                            <c:forEach var="sub" items="${subjectList}">
+                                <option value="${sub.cd}"
+                                ${selectedF3 eq sub.cd ? 'selected' : ''}>
+                                ${sub.name}
+                                </option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -110,33 +113,45 @@
 
             </div>
         </form>
-        
 
     </div>
-	<table class="table">
-	    <thead>
-	        <tr>
-	            <th>入学年度</th>
-	            <th>クラス</th>
-	            <th>学生番号</th>
-	            <th>氏名</th>
-	            <th>1回</th>
-	            <th>2回</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <c:forEach var="row" items="${testList}">
-	            <tr>
-	                <td>${row.entYear}</td>
-	                <td>${row.classNum}</td>
-	                <td>${row.studentNo}</td>
-	                <td>${row.studentName}</td>
-	                <td>${row.score1}</td>
-	                <td>${row.score2}</td>
-	            </tr>
-	        </c:forEach>
-	    </tbody>
-	</table>
+
+    <!-- ERROR MESSAGE -->
+    <c:if test="${not empty subjectErrorMessage}">
+        <div class="px-4 mb-3 text-dark">
+            <div>${subjectErrorMessage}</div>
+        </div>
+    </c:if>
+
+    <!-- ===================== RESULT TABLE ===================== -->
+    <c:if test="${not empty subjectTestList}">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>入学年度</th>
+                    <th>クラス</th>
+                    <th>学生番号</th>
+                    <th>氏名</th>
+                    <th>1回</th>
+                    <th>2回</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <c:forEach var="row" items="${subjectTestList}">
+                    <tr>
+                        <td>${row.entYear}</td>
+                        <td>${row.classNum}</td>
+                        <td>${row.studentNo}</td>
+                        <td>${row.studentName}</td>
+                        <td>${row.score1}</td>
+                        <td>${row.score2}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
+
     <!-- BACK -->
     <div class="px-4 mt-3">
         <a href="Menu.action">メニューへ戻る</a>

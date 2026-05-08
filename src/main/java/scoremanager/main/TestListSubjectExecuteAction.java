@@ -24,30 +24,42 @@ public class TestListSubjectExecuteAction extends Action {
 
         String schoolCd = teacher.getSchool().getCd();
 
-        // ← ★ここが重要
         String entYear = req.getParameter("admissionYear");
         String classNum = req.getParameter("classNo");
         String subjectCd = req.getParameter("subjectCode");
+
+        // keep search state (IMPORTANT for JSP selected values)
+        req.setAttribute("selectedF1", entYear);
+        req.setAttribute("selectedF2", classNum);
+        req.setAttribute("selectedF3", subjectCd);
+
+        // if all empty → show message instead of query
+        if (isBlank(entYear) && isBlank(classNum) && isBlank(subjectCd)) {
+            req.setAttribute("subjectErrorMessage", "入学年度とクラスと科目を選択してください");
+
+            setSelectOptions(req, schoolCd);
+
+            // IMPORTANT: stay on main JSP
+            req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+            return;
+        }
 
         TestListSubjectDao dao = new TestListSubjectDao();
 
         List<SubjectTestRow> list =
             dao.filter(schoolCd, entYear, classNum, subjectCd);
 
-        req.setAttribute("testList", list);
+        // ✔ FIX: use separate attribute (NO collision)
+        req.setAttribute("subjectTestList", list);
 
         setSelectOptions(req, schoolCd);
-        
-        req.setAttribute("selectedF1", entYear);
-        req.setAttribute("selectedF2", classNum);
-        req.setAttribute("selectedF3", subjectCd);
-        
+
+        // IMPORTANT: stay on main JSP (not separate page)
         req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
     }
-    
+
     private void setSelectOptions(HttpServletRequest req, String schoolCd) throws Exception {
 
-        // 入学年度リスト（現在年度を基準に前後10年）
         int currentYear = java.time.Year.now().getValue();
         List<Integer> entYearList = new ArrayList<>();
         for (int y = currentYear - 10; y <= currentYear + 10; y++) {
@@ -55,16 +67,13 @@ public class TestListSubjectExecuteAction extends Action {
         }
         req.setAttribute("entYearList", entYearList);
 
-        // クラス一覧（既存の ClassNumDao を使用）
         ClassNumDao classNumDao = new ClassNumDao();
         req.setAttribute("classList", classNumDao.filter(schoolCd));
 
-        // 科目一覧（既存の SubjectDao を使用）
         SubjectDao subjectDao = new SubjectDao();
         req.setAttribute("subjectList", subjectDao.filter(schoolCd));
     }
 
-    /** null または空文字かを判定 */
     private boolean isBlank(String s) {
         return s == null || s.isBlank();
     }
