@@ -54,10 +54,10 @@ public class TestListAction extends Action {
             HttpServletResponse res,
             String schoolCd) throws Exception {
 
-        String entYearStr = req.getParameter("f1");
-        String classNum   = req.getParameter("f2");
-        String subjectCd  = req.getParameter("f3");
-
+    	String entYearStr = req.getParameter("admissionYear");
+    	String classNum   = req.getParameter("classNo");
+    	String subjectCd  = req.getParameter("subjectCode");
+    	
         // 選択値を保持（エラー時もセレクトボックスの状態を維持）
         req.setAttribute("selectedF1", entYearStr);
         req.setAttribute("selectedF2", classNum);
