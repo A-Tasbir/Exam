@@ -93,7 +93,6 @@ public class TestListAction extends Action {
         	        subjectCd
         	    );
 
-        // 該当なし（設計書 GRMR002エラー）
         if (list.isEmpty()) {
             req.setAttribute("errorMessage", "検索条件に該当する成績情報が存在しません。");
             req.getRequestDispatcher(
@@ -110,7 +109,7 @@ public class TestListAction extends Action {
         }
 
         req.setAttribute("testList",   list);
-        req.setAttribute("searchMode", "subject"); // JSPで表示切替に使用
+        req.setAttribute("searchMode", "subject"); // JSPで表示を切り替える
 
         req.getRequestDispatcher(
             "/scoremanager/main/test_list.jsp"
