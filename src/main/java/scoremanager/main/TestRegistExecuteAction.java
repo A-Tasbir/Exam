@@ -119,14 +119,14 @@ public class TestRegistExecuteAction extends Action {
             try {
                 int point = Integer.parseInt(pointStr);
                 if (point < 0 || point > 100) {
-                    row.setPointError("0〜100の範囲でを入力してください。");
+                    row.setPointError("0〜100の範囲で入力してください。");
                     row.setPoint(point);
                     hasError = true;
                 } else {
                     row.setPoint(point);
                 }
             } catch (NumberFormatException e) {
-                row.setPointError("0〜100の範囲でを入力してください。");
+                row.setPointError("0〜100の範囲で入力してください。");
                 hasError = true;
             }
             tests.add(row);
@@ -147,6 +147,18 @@ public class TestRegistExecuteAction extends Action {
                     }
                 }
             }
+            
+            int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+            List<Integer> entYearSet = new ArrayList<>();
+            for (int i = currentYear - 10; i <= currentYear + 1; i++) entYearSet.add(i);
+            List<String> classNumSet = new dao.ClassNumDao().filter(schoolCd);
+            List<bean.Subject> subjectSet = new SubjectDao().filter(schoolCd);
+            List<Integer> noSet = new ArrayList<>();
+            for (int i = 1; i <= 10; i++) noSet.add(i);
+            req.setAttribute("entYearSet", entYearSet);
+            req.setAttribute("classNumSet", classNumSet);
+            req.setAttribute("subjectSet", subjectSet);
+            req.setAttribute("noSet", noSet);
 
             Subject subject = new SubjectDao().get(schoolCd, subjectCd);
             String subjectName = subject != null ? subject.getName() : "";

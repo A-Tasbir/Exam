@@ -71,7 +71,7 @@
                         <input type="hidden" name="no" value="${no}" />
                         <input type="hidden" name="entYear" value="${entYear}" />
                         <input type="hidden" name="classNum" value="${classNum}" />
-                        <table class="table table-hover mx-3">
+                        <table class="table table-hover w-100">
                             <tr>
                                 <th>入学年度</th>
                                 <th>クラス</th>
