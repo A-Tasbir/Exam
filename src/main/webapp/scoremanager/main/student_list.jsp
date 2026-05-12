@@ -21,28 +21,30 @@
     </div>
 
     <!-- FILTER -->
-    <form method="get" action="StudentList.action" class="px-4 mb-3 w-100 pb-4 pt-2" style="border: 1px solid #000; paddint:12px;">
+    <form method="get" action="StudentList.action"
+        class="px-4 mb-3 w-100 pb-4 pt-2"
+        style="border: 1px solid #000; padding:12px;">
 
         <div class="d-flex align-items-end justify-content-between flex-wrap w-100">
 
             <!-- 入学年度 -->
             <div>
-    			<label>入学年度</label>
+                <label>入学年度</label>
 
-    			<select name="f1" class="form-select" style="width:250px;">
-        		<option value="">----</option>
+                <select name="f1" class="form-select" style="width:250px;">
+                    <option value="">----</option>
 
-        			<c:forEach var="i" begin="0" end="10">
-            			<c:set var="year" value="${currentYear - i}" />
+                    <c:forEach var="i" begin="0" end="10">
+                        <c:set var="year" value="${currentYear - i}" />
 
-            		<option value="${year}"
-                		${f1 eq year.toString() ? 'selected' : ''}>
-                ${year}
-            	</option>
-        </c:forEach>
+                        <option value="${year}"
+                            ${f1 eq year.toString() ? 'selected' : ''}>
+                            ${year}
+                        </option>
+                    </c:forEach>
 
-    </select>
-</div>
+                </select>
+            </div>
 
             <!-- クラス -->
             <div>
@@ -64,6 +66,7 @@
             <!-- 在学中 -->
             <div>
                 <label>在学中</label><br>
+
                 <input type="checkbox" name="f3" value="t"
                     ${not empty f3 ? 'checked' : ''} />
             </div>
@@ -76,60 +79,75 @@
         </div>
     </form>
 
-    <!-- RESULTS -->
-    <div class="px-4 mb-2">
-        検索結果：${not empty students ? students.size() : 0}件
-    </div>
+    <!-- ERROR MESSAGE -->
+    <c:if test="${not empty errors}">
+        <div class="px-4 mb-2 text-dark">
+            <c:forEach var="e" items="${errors}">
+                <div>${e}</div>
+            </c:forEach>
+        </div>
+    </c:if>
 
-    <!-- TABLE -->
-    <div class="px-4 w-100">
-        <table class="table table-bordered table-hover w-100">
+    <!-- NO RESULT MESSAGE -->
+    <c:if test="${empty errors and empty students}">
+        <div class="px-4 mb-2 text-dark">
+            学生情報が存在しませんでした
+        </div>
+    </c:if>
 
-            <thead class="table-secondary">
-                <tr>
-                    <th>入学年度</th>
-                    <th>学生番号</th>
-                    <th>氏名</th>
-                    <th>クラス</th>
-                    <th>在学中</th>
-                    <th></th>
-                </tr>
-            </thead>
+    <!-- RESULTS + TABLE -->
+    <c:if test="${empty errors and not empty students}">
 
-            <tbody>
-                <c:choose>
-                    <c:when test="${not empty students}">
-                        <c:forEach var="s" items="${students}">
-                            <tr>
-                                <td>${s.entYear}</td>
-                                <td>${s.no}</td>
-                                <td>${s.name}</td>
-                                <td>${s.classNum}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${s.attend}">○</c:when>
-                                        <c:otherwise>×</c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <a href="StudentUpdate.action?no=${s.no}">変更</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </c:when>
+        <!-- RESULTS -->
+        <div class="px-4 mb-2">
+            検索結果：${students.size()}件
+        </div>
 
-                    <c:otherwise>
+        <!-- TABLE -->
+        <div class="px-4 w-100">
+            <table class="table  table-hover w-100">
+
+                <thead class="table-secondary">
+                    <tr>
+                        <th>入学年度</th>
+                        <th>学生番号</th>
+                        <th>氏名</th>
+                        <th>クラス</th>
+                        <th>在学中</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <c:forEach var="s" items="${students}">
                         <tr>
-                            <td colspan="6" class="text-center">
-                                学生情報が存在しませんでした
+                            <td>${s.entYear}</td>
+                            <td>${s.no}</td>
+                            <td>${s.name}</td>
+                            <td>${s.classNum}</td>
+
+                            <td>
+                                <c:choose>
+                                    <c:when test="${s.attend}">○</c:when>
+                                    <c:otherwise>×</c:otherwise>
+                                </c:choose>
+                            </td>
+
+                            <td>
+                                <a href="StudentUpdate.action?no=${s.no}">
+                                    変更
+                                </a>
                             </td>
                         </tr>
-                    </c:otherwise>
-                </c:choose>
-            </tbody>
+                    </c:forEach>
 
-        </table>
-    </div>
+                </tbody>
+
+            </table>
+        </div>
+
+    </c:if>
 
 </section>
 

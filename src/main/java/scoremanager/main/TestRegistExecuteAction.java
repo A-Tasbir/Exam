@@ -119,14 +119,14 @@ public class TestRegistExecuteAction extends Action {
             try {
                 int point = Integer.parseInt(pointStr);
                 if (point < 0 || point > 100) {
-                    row.setPointError("0〜100の数値を入力してください。");
+                    row.setPointError("0〜100の範囲でを入力してください。");
                     row.setPoint(point);
                     hasError = true;
                 } else {
                     row.setPoint(point);
                 }
             } catch (NumberFormatException e) {
-                row.setPointError("0〜100の数値を入力してください。");
+                row.setPointError("0〜100の範囲でを入力してください。");
                 hasError = true;
             }
             tests.add(row);

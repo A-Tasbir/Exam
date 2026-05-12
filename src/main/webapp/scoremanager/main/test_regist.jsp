@@ -90,7 +90,7 @@
                                         <input type="text" name="point_${s.index}" value="${row.point}"
                                                class="form-control" style="width:100px;" />
                                         <c:if test="${!empty row.pointError}">
-                                            <div class="text-danger small">${row.pointError}</div>
+                                            <div class="text-warning small">${row.pointError}</div>
                                         </c:if>
                                     </td>
                                 </tr>

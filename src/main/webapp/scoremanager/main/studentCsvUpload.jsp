@@ -11,7 +11,7 @@
             <div class="d-flex justify-content-between align-items-center
                         bg-secondary bg-opacity-10 py-2 px-4 mb-3">
                 <h2 class="h3 mb-0 fw-normal">学生CSV登録</h2>
-                <a href="StudentRegist.action">戻る</a>
+                <a href="StudentCreate.action">戻る</a>
             </div>
 
             <!-- エラーメッセージ -->
