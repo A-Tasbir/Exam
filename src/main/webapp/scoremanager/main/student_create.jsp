@@ -31,7 +31,7 @@
 					</select>
 					 <c:forEach var="error" items="${errors}">
         				<c:if test="${error == '入学年度を選択してください'}">
-            			<div class="text-danger small mt-1">${error}</div>
+            			<div class="text-warning small mt-1">${error}</div>
         				</c:if>
     				</c:forEach>
 
@@ -41,7 +41,7 @@
 					<input type="text" name="no" class="form-control" value="${no}" placeholder="学生番号を入力してください" required />
 					<c:forEach var="error" items="${errors}">
 						<c:if test="${error == '学生番号が重複しています'}">
-							<div class="text-danger small mt-1">${error}</div>
+							<div class="text-warning small mt-1">${error}</div>
 						</c:if>
 					</c:forEach>
 				</div>
