@@ -25,6 +25,10 @@ public class TestListStudentExecuteAction extends Action {
         // 入力チェック
         // =========================
         if (studentNo == null || studentNo.isEmpty()) {
+
+            // 入力値保持
+            req.setAttribute("studentNo", studentNo);
+
             req.setAttribute("errorMessage", "学籍番号を入力してください");
             req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
             return;
@@ -37,6 +41,10 @@ public class TestListStudentExecuteAction extends Action {
         Student student = studentDao.get(studentNo);
 
         if (student == null) {
+
+            // 入力値保持
+            req.setAttribute("studentNo", studentNo);
+
             req.setAttribute("errorMessage", "成績情報が存在しませんでした");
             req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
             return;
@@ -49,7 +57,7 @@ public class TestListStudentExecuteAction extends Action {
         }
 
         // =========================
-        // 🔽 dropdownデータ（test_list.jspと完全同じ構造）
+        // dropdownデータ
         // =========================
 
         int currentYear = java.time.Year.now().getValue();
@@ -81,6 +89,10 @@ public class TestListStudentExecuteAction extends Action {
         List<Test> list = testDao.findByStudentNo(studentNo);
 
         if (list.isEmpty()) {
+
+            // 入力値保持
+            req.setAttribute("studentNo", studentNo);
+
             req.setAttribute("errorMessage", "成績情報が存在しませんでした");
             req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
             return;

@@ -112,7 +112,7 @@
     <!-- RESULT TABLE -->
     <c:if test="${not empty testList}">
         <div class="px-4 w-100">
-            <table class="table table-bordered table-hover w-100">
+            <table class="table table-hover w-100">
                 <thead class="table-secondary">
                     <tr>
                         <th style="width:40%;">科目名</th>
