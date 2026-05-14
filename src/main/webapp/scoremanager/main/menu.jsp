@@ -16,7 +16,6 @@
 				メニュー
 			</h2>
 
-			<!-- ===== 1段目 ===== -->
 			<div class="row text-center px-4 fs-3 my-5">
 
 				<!-- 学生管理 -->
@@ -35,6 +34,24 @@
 						</div>
 						<div>
 							<a href="TestList.action">成績参照</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- 出欠管理 -->
+				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
+					style="height: 10rem; background-color: #bdd;">
+					<div>
+						<div>出欠管理</div>
+						<div>
+							<a href="AttendanceRegister.action">
+								出欠登録
+							</a>
+						</div>
+						<div>
+							<a href="AttendanceList.action">
+								出欠参照
+							</a>
 						</div>
 					</div>
 				</div>
@@ -58,35 +75,6 @@
 						<a href="TeacherList.action">先生管理</a>
 					</div>
 				</c:if>
-
-			</div>
-
-			<!-- ===== 2段目 ===== -->
-			<div class="row text-center px-4 fs-3 my-5">
-
-				<!-- 出欠管理 -->
-				<div class="col-3 d-flex align-items-center justify-content-center mx-2 rounded shadow"
-					style="height: 10rem; background-color: #bdd;">
-
-					<div>
-
-						<div>出欠管理</div>
-
-						<div>
-							<a href="AttendanceRegister.action">
-								出欠登録
-							</a>
-						</div>
-
-						<div>
-							<a href="AttendanceList.action">
-								出欠参照
-							</a>
-						</div>
-
-					</div>
-
-				</div>
 
 			</div>
 
