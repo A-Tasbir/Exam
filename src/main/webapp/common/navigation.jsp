@@ -39,5 +39,10 @@
 	<li class="nav-item mb-3">
 		<a href="SubjectList.action">科目管理</a>
 	</li>
+	
+	<li class="nav-item">出欠管理</li>
+    <li class="nav-item mx-3 mb-3"><a href="AttendanceRegist.action">出欠登録</a></li>
+    <li class="nav-item mx-3 mb-3"><a href="AttendanceList.action">出欠一覧</a></li>
+	<li class="nav-item mx-3 mb-3"><a href="AttendanceRate.action">出欠率</a></li>
 
 </ul>

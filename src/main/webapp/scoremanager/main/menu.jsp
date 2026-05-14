@@ -75,6 +75,16 @@
 						<a href="TeacherList.action">先生管理</a>
 					</div>
 				</c:if>
+				
+				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
+					style="height: 10rem; background-color: #ced;">
+					<div>
+						<div>出欠管理</div>
+						<div><a href="AttendanceRegist.action">出欠登録</a></div>
+						<div><a href="AttendanceList.action">出欠一覧</a></div>
+						<div><a href="AttendanceRate.action">出欠率</a></div>
+					</div>
+				</div>
 
 			</div>
 

@@ -216,4 +216,26 @@ public class StudentDao extends Dao {
             }
         }
     }
+    
+    public List<Student> filterAll(String schoolCd) throws Exception {
+        List<Student> list = new ArrayList<>();
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(
+                "SELECT * FROM student WHERE school_cd = ? ORDER BY no"
+            );
+            ps.setString(1, schoolCd);
+            ResultSet rs = ps.executeQuery();
+            SchoolDao schoolDao = new SchoolDao();
+            School school = schoolDao.get(schoolCd);
+            while (rs.next()) {
+                list.add(mapStudent(rs, school));
+            }
+        } finally {
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        }
+        return list;
+    }
 }
