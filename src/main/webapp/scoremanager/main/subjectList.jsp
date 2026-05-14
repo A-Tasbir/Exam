@@ -17,6 +17,16 @@
 				科目管理
 			</h2>
 
+			<c:if test="${not empty error}">
+
+				<div class="alert alert-warning">
+
+					${error}
+
+				</div>
+
+			</c:if>
+
 			<div class="mb-3 text-end">
 
 				<a href="SubjectCreate.action"
@@ -62,8 +72,11 @@
 
 								&nbsp;
 
-								<a href="SubjectDelete.action?cd=${subject.cd}">
+								<a href="SubjectDelete.action?cd=${subject.cd}"
+									onclick="return confirm('本当に削除しますか？');">
+
 									削除
+
 								</a>
 
 							</td>

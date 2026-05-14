@@ -19,6 +19,10 @@
 
 			<form action="SubjectEditExecute.action" method="post">
 
+				<input type="hidden"
+					name="oldCd"
+					value="${subject.cd}">
+
 				<div class="mb-3">
 
 					<label class="form-label">
@@ -28,8 +32,11 @@
 					<input type="text"
 						name="cd"
 						value="${subject.cd}"
-						class="form-control"
-						readonly>
+						class="form-control">
+
+					<div class="text-warning">
+						${errorCd}
+					</div>
 
 				</div>
 
@@ -43,6 +50,10 @@
 						name="name"
 						value="${subject.name}"
 						class="form-control">
+
+					<div class="text-warning">
+						${errorName}
+					</div>
 
 				</div>
 

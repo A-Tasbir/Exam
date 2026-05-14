@@ -24,7 +24,7 @@ public class TestListAction extends Action {
 
         HttpSession session = req.getSession();
 
-        // セッションから学校コードを取得（他の既存Actionに倣う）
+        // セッションから学校コードを取得
         Teacher teacher = (Teacher) session.getAttribute("user");
         String schoolCd = teacher.getSchool().getCd();
         // セレクトボックスの選択肢は常にセット（初期表示・検索後どちらでも必要）
@@ -83,7 +83,7 @@ public class TestListAction extends Action {
             return;
         }
 
-        // DB検索（既存の TestDao.getSubjectTestList を使用）
+        // DB検索
         TestDao testDao = new TestDao();
         List<SubjectTestRow> list =
         	    testDao.getSubjectTestList(
@@ -116,9 +116,6 @@ public class TestListAction extends Action {
         ).forward(req, res);
     }
 
-    // =========================================================
-    // イベント32: 学生番号で検索
-    // =========================================================
     private void searchByStudent(
             HttpServletRequest req,
             HttpServletResponse res) throws Exception {
@@ -137,7 +134,7 @@ public class TestListAction extends Action {
             return;
         }
 
-        // 成績データ存在チェック（既存の TestListStudentDao を使用）
+        // 成績データチェック
         TestListStudentDao studentCheckDao = new TestListStudentDao();
         if (!studentCheckDao.exists(studentNo)) {
             req.setAttribute("errorMessage", "該当する学生の成績情報が存在しません。");
@@ -147,7 +144,7 @@ public class TestListAction extends Action {
             return;
         }
 
-        // 成績一覧取得（科目名JOIN済み、既存の TestDao.findByStudentNo を使用）
+        // 成績一覧取得
         TestDao testDao = new TestDao();
         List<Test> list = testDao.findByStudentNo(studentNo);
 
@@ -160,12 +157,9 @@ public class TestListAction extends Action {
         ).forward(req, res);
     }
 
-    // =========================================================
-    // セレクトボックスの選択肢をリクエストにセット（共通処理）
-    // =========================================================
     private void setSelectOptions(HttpServletRequest req, String schoolCd) throws Exception {
 
-        // 入学年度リスト（現在年度を基準に前後10年）
+        // 入学年度リスト
         int currentYear = java.time.Year.now().getValue();
         List<Integer> entYearList = new ArrayList<>();
         for (int y = currentYear - 10; y <= currentYear + 10; y++) {
@@ -173,11 +167,11 @@ public class TestListAction extends Action {
         }
         req.setAttribute("entYearList", entYearList);
 
-        // クラス一覧（既存の ClassNumDao を使用）
+        // クラス一覧
         ClassNumDao classNumDao = new ClassNumDao();
         req.setAttribute("classList", classNumDao.filter(schoolCd));
 
-        // 科目一覧（既存の SubjectDao を使用）
+        // 科目一覧
         SubjectDao subjectDao = new SubjectDao();
         req.setAttribute("subjectList", subjectDao.filter(schoolCd));
     }

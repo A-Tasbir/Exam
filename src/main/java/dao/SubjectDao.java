@@ -126,28 +126,33 @@ public class SubjectDao extends Dao {
     }
 
     public void update(
-            Subject subject
+            Subject subject,
+            String oldCd
     ) throws Exception {
 
         Connection con = getConnection();
 
         String sql =
-                "update SUBJECT set NAME = ? where SCHOOL_CD = ? and CD = ?";
+                "update SUBJECT set CD = ?, NAME = ? where SCHOOL_CD = ? and CD = ?";
 
         try (PreparedStatement ps =
                 con.prepareStatement(sql)) {
 
             ps.setString(
                     1,
-                    subject.getName());
+                    subject.getCd());
 
             ps.setString(
                     2,
-                    subject.getSchoolCd());
+                    subject.getName());
 
             ps.setString(
                     3,
-                    subject.getCd());
+                    subject.getSchoolCd());
+
+            ps.setString(
+                    4,
+                    oldCd);
 
             ps.executeUpdate();
 
