@@ -92,6 +92,7 @@
                     <label class="form-label mb-1">学籍番号</label>
                     <input type="text"
                            name="studentNo"
+                           value="${f4}"
                            class="form-control"
                            style="width:220px; height:38px;"required>
                 </div>

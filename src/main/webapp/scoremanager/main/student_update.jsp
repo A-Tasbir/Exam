@@ -40,7 +40,7 @@
 					<input type="text" class="form-control w-100" name="name"
 						value="${student.name}" maxlength="10" required />
 				</div>
-				<<div class="mb-3">
+				<div class="mb-3">
    					 <label class="form-label">クラス番号</label>
    					 <select name="classNum" class="form-select w-100">
         				<option value="">選択してください</option>
