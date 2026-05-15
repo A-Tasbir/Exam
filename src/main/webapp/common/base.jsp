@@ -131,12 +131,18 @@ table,
    FORMS
 ========================= */
 
-input,
+input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
 	background-color: var(--card-color) !important;
 	color: var(--text-color) !important;
 	border: 1px solid var(--border-color) !important;
+}
+
+/* Keep Bootstrap checkbox style */
+
+.form-check-input {
+	accent-color: #0d6efd;
 }
 
 /* =========================
