@@ -107,7 +107,7 @@
         <div class="px-4 w-100">
             <table class="table  table-hover w-100">
 
-                <thead class="table-secondary">
+                <thead>
                     <tr>
                         <th>入学年度</th>
                         <th>学生番号</th>

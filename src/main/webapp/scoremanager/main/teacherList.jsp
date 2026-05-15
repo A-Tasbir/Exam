@@ -26,9 +26,9 @@
 
 <div class="px-4 w-100">
 
-<table class="table table-bordered table-hover w-100">
+<table class="table  table-hover w-100">
 
-<thead class="table-secondary">
+<thead>
 <tr>
 	<th>ID</th>
 	<th>名前</th>
@@ -43,7 +43,7 @@
 	<c:when test="${not empty list}">
 		<c:forEach var="t" items="${list}">
 
-			<tr class="${t.admin ? 'table-warning' : ''}">
+			<tr>
 
 				<td>${t.id}</td>
 

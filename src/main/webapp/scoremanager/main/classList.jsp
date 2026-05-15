@@ -25,15 +25,15 @@
         <c:forEach var="c" items="${classList}">
 
             <!-- CLASS HEADER -->
-            <div class="mb-3 p-2 bg-light border">
+            <div class="mb-3 p-2 ">
                 <strong>クラス: ${c.classNum}</strong>
                 <a href="ClassEdit.action?classNum=${c.classNum}">変更</a>
             </div>
 
             <!-- STUDENT TABLE -->
-            <table class="table table-bordered mb-4">
+            <table class="table  mb-4">
 
-                <thead class="table-secondary">
+                <thead >
                     <tr>
                         <th>学生番号</th>
                         <th>氏名</th>
