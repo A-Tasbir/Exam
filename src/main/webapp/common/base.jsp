@@ -225,6 +225,78 @@ a:visited {
 	border-color: var(--border-color) !important;
 }
 
+/* =========================
+   MENU CARDS
+========================= */
+
+.menu-card{
+	height:10rem;
+	transition:all 0.3s ease;
+	font-size:inherit;
+}
+
+.menu-card a{
+	text-decoration:none;
+	font-weight:bold;
+	font-size:inherit;
+}
+
+/* ---------- LIGHT ---------- */
+
+.student-card{
+	background-color:#dbb;
+}
+
+.score-card{
+	background-color:#bdb;
+}
+
+.class-card{
+	background-color:#ddb;
+}
+
+.subject-card{
+	background-color:#bbd;
+}
+
+.teacher-card{
+	background-color:#ddd;
+}
+
+.attendance-card{
+	background-color:#ced;
+}
+
+/* ---------- DARK ---------- */
+
+.dark-mode .menu-card{
+	border:1px solid #555;
+}
+
+.dark-mode .student-card{
+	background-color:#5c3d3d;
+}
+
+.dark-mode .score-card{
+	background-color:#3d5c3d;
+}
+
+.dark-mode .class-card{
+	background-color:#5c5c3d;
+}
+
+.dark-mode .subject-card{
+	background-color:#3d3d5c;
+}
+
+.dark-mode .teacher-card{
+	background-color:#555;
+}
+
+.dark-mode .attendance-card{
+	background-color:#2f4f4f;
+}
+
 </style>
 
 </head>
