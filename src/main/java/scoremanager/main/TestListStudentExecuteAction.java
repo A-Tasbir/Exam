@@ -45,7 +45,7 @@ public class TestListStudentExecuteAction extends Action {
             // 入力値保持
             req.setAttribute("studentNo", studentNo);
 
-            req.setAttribute("errorMessage", "成績情報が存在しませんでした");
+            req.setAttribute("errorMessage", "学生情報が存在しませんでした");
             req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
             return;
         }
@@ -90,10 +90,13 @@ public class TestListStudentExecuteAction extends Action {
 
         if (list.isEmpty()) {
 
-            // 入力値保持
+            // 学生情報表示
             req.setAttribute("studentNo", studentNo);
+            req.setAttribute("studentName", student.getName());
 
+            // エラー
             req.setAttribute("errorMessage", "成績情報が存在しませんでした");
+
             req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
             return;
         }
