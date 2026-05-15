@@ -67,7 +67,7 @@
             <div>
                 <label>在学中</label><br>
 
-                <input type="checkbox" name="f3" value="t"
+                <input type="checkbox" class="form-check-input" name="f3" value="t"
                     ${not empty f3 ? 'checked' : ''} />
             </div>
 
