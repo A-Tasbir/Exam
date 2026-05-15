@@ -87,7 +87,7 @@
                                     <td>${row.studentName}</td>
                                     <td>
                                         <input type="hidden" name="studentNo_${s.index}" value="${row.studentNo}" />
-                                        <input type="text" name="point_${s.index}" value="${row.point}"
+                                        <input type="text" name="point_${s.index}" value="${row.point>= 0 ? row.point : ''}"
                                                class="form-control" w-100" />
                                         <c:if test="${!empty row.pointError}">
                                             <div class="text-warning small">${row.pointError}</div>

@@ -5,7 +5,7 @@ public class TestRow {
     private String studentName;
     private int entYear;
     private String classNum;
-    private int point;
+    private int point=-1;
     private String pointError;
 
     public String getStudentNo() { return studentNo; }

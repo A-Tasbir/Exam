@@ -116,6 +116,11 @@ public class TestRegistExecuteAction extends Action {
             row.setStudentNo(studentNo);
 
             // バリデーション (0〜100)
+            if (pointStr == null || pointStr.trim().isEmpty()) {
+                row.setPoint(-1); // blank → skip
+                tests.add(row);
+                continue;
+            }
             try {
                 int point = Integer.parseInt(pointStr);
                 if (point < 0 || point > 100) {
@@ -176,7 +181,7 @@ public class TestRegistExecuteAction extends Action {
 
         // DB に保存
         for (TestRow row : tests) {
-            if (row.getPointError() == null) {
+            if (row.getPointError() == null && row.getPoint() >= 0) {
                 Test t = new Test();
                 t.setStudentNo(row.getStudentNo());
                 t.setSubjectCd(subjectCd);
