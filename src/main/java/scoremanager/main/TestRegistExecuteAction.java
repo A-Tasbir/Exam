@@ -154,7 +154,7 @@ public class TestRegistExecuteAction extends Action {
             List<String> classNumSet = new dao.ClassNumDao().filter(schoolCd);
             List<bean.Subject> subjectSet = new SubjectDao().filter(schoolCd);
             List<Integer> noSet = new ArrayList<>();
-            for (int i = 1; i <= 10; i++) noSet.add(i);
+            for (int i = 1; i <= 2; i++) noSet.add(i);
             req.setAttribute("entYearSet", entYearSet);
             req.setAttribute("classNumSet", classNumSet);
             req.setAttribute("subjectSet", subjectSet);

@@ -88,7 +88,7 @@
                                     <td>
                                         <input type="hidden" name="studentNo_${s.index}" value="${row.studentNo}" />
                                         <input type="text" name="point_${s.index}" value="${row.point}"
-                                               class="form-control" style="width:100px;" />
+                                               class="form-control" w-100" />
                                         <c:if test="${!empty row.pointError}">
                                             <div class="text-warning small">${row.pointError}</div>
                                         </c:if>

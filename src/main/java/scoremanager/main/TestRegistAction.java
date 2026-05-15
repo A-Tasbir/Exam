@@ -32,7 +32,7 @@ public class TestRegistAction extends Action {
 
         // 回数プルダウン (1〜10)
         List<Integer> noSet = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) noSet.add(i);
+        for (int i = 1; i <= 2; i++) noSet.add(i);
 
         req.setAttribute("entYearSet", entYearSet);
         req.setAttribute("classNumSet", classNumSet);
