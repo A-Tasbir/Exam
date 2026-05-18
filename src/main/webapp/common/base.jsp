@@ -69,6 +69,47 @@ body {
 	background-color: var(--bg-color);
 	color: var(--text-color);
 }
+/* =========================
+   Bootstrapボタンの色を元に戻す
+   （グローバルa{}の上書きを防ぐ）
+========================= */
+
+/* =========================
+   Bootstrapボタン（ライトモード）
+   ※背景色と文字色をBootstrap標準に戻す
+========================= */
+
+/* --- Primary --- */
+.btn-primary {
+    background-color: #0d6efd !important; /* 標準ブルー */
+    border-color: #0d6efd !important;
+    color: #ffffff !important; /* 白文字 */
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: #0b5ed7 !important; /* 標準ホバー色 */
+    border-color: #0a58ca !important;
+    color: #ffffff !important;
+}
+
+/* --- Secondary --- */
+.btn-secondary {
+    background-color: #6c757d !important; /* 標準グレー */
+    border-color: #6c757d !important;
+    color: #ffffff !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus {
+    background-color: #5c636a !important; /* 標準ホバー色 */
+    border-color: #565e64 !important;
+    color: #ffffff !important;
+}
+
+
 
 /* =========================
    HEADER
@@ -131,12 +172,12 @@ table,
    FORMS
 ========================= */
 
-input:not([type="checkbox"]):not([type="radio"]),
+input:not(.btn):not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
-	background-color: var(--card-color) !important;
-	color: var(--text-color) !important;
-	border: 1px solid var(--border-color) !important;
+    background-color: var(--card-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
 /* Keep Bootstrap checkbox style */
@@ -162,8 +203,8 @@ a {
 /* Hover */
 
 a:hover {
-	color: #8ec5ff !important;
-	text-shadow: 0 0 8px rgba(120, 180, 255, 0.7);
+	color: #0a58ca !important;
+	
 }
 
 /* Underline animation */
@@ -187,6 +228,18 @@ a:hover::after {
 
 a:visited {
 	color: #7ab8ff !important;
+}
+/* =========================
+   サイドバー内リンク（ライトモード）
+   ※ライトモードでは青色リンクに統一
+========================= */
+
+nav a {
+    color: #0d6efd !important; /* Bootstrap標準の青 */
+}
+
+nav a:hover {
+    color: #0a58ca !important; /* ホバー時の濃い青 */
 }
 
 /* =========================
@@ -235,43 +288,45 @@ a:visited {
    MENU CARDS
 ========================= */
 
-.menu-card{
-	height:10rem;
-	transition:all 0.3s ease;
-	font-size:inherit;
-}
-
-.menu-card a{
-	text-decoration:none;
-	font-weight:bold;
-	font-size:inherit;
-}
-
-/* ---------- LIGHT ---------- */
+/* =========================
+   メニューカード（ライトモード）
+   ※ライトモードで背景色が薄く見えにくかったため改善
+========================= */
 
 .student-card{
-	background-color:#dbb;
+    background-color:#f4c7c3; /* 学生管理カード：淡い赤で視認性UP */
 }
 
 .score-card{
-	background-color:#bdb;
+    background-color:#c8e6c9; /* 成績管理カード：淡い緑で視認性UP */
 }
 
 .class-card{
-	background-color:#ddb;
+    background-color:#fff3c4; /* クラス管理カード：淡い黄色で視認性UP */
 }
 
 .subject-card{
-	background-color:#bbd;
+    background-color:#c5d8ff; /* 科目管理カード：淡い青で視認性UP */
 }
 
 .teacher-card{
-	background-color:#ddd;
+    background-color:#e0e0e0; /* 先生管理カード：明るいグレーで視認性UP */
 }
 
 .attendance-card{
-	background-color:#ced;
+    background-color:#d0f0f0; /* 出欠管理カード：淡い水色で視認性UP */
 }
+
+/* ライトモード時の文字色（濃い文字で読みやすくする） */
+.menu-card a {
+    color: #0d6efd !important; /* Bootstrap標準の青 */
+}
+
+/* ホバー時（ライトモード） */
+.menu-card a:hover {
+    color: #0a58ca !important; /* 少し濃い青 */
+}
+
 
 /* ---------- DARK ---------- */
 
@@ -302,6 +357,46 @@ a:visited {
 .dark-mode .attendance-card{
 	background-color:#2f4f4f;
 }
+.dark-mode .alert-success {
+    background-color: #1f3b2e !important;
+    color: #b6f3d0 !important;
+    border-color: #2e5a43 !important;
+}
+
+.dark-mode .alert-danger {
+    background-color: #3b1f1f !important;
+    color: #f3b6b6 !important;
+    border-color: #5a2e2e !important;
+}
+
+.dark-mode .alert-warning {
+    background-color: #4a3a1f !important;
+    color: #ffe9b3 !important;
+    border-color: #6b5328 !important;
+}
+
+.dark-mode .alert-info {
+    background-color: #1f3a4a !important;
+    color: #b3e5ff !important;
+    border-color: #28536b !important;
+}
+
+/* =========================
+   メニューカード内リンク（ダークモード）
+   ※ホバー時も青色を維持して視認性UP
+========================= */
+
+.dark-mode .menu-card a {
+    color: #6cb6ff !important; /* 通常時：青 */
+}
+
+.dark-mode .menu-card a:hover {
+    color: #9fd0ff !important; /* ホバー時：明るい青 */
+    text-shadow: 0 0 6px rgba(159, 208, 255, 0.6);
+}
+
+
+
 
 </style>
 
@@ -376,7 +471,7 @@ a:visited {
 
 		if (savedTheme === "dark") {
 
-			document.body.classList.add("dark-mode");
+			document.documentElement.classList.add("dark-mode");
 
 			toggleBtn.innerHTML = "☀️";
 
@@ -384,9 +479,9 @@ a:visited {
 
 		toggleBtn.addEventListener("click", function () {
 
-			document.body.classList.toggle("dark-mode");
+			document.documentElement.classList.toggle("dark-mode");
 
-			if (document.body.classList.contains("dark-mode")) {
+			if (document.documentElement.classList.contains("dark-mode")) {
 
 				localStorage.setItem("theme", "dark");
 
