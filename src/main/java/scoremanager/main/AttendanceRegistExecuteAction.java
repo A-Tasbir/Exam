@@ -37,7 +37,7 @@ public class AttendanceRegistExecuteAction extends Action {
             String entYearStr = req.getParameter("entYear");
 
             if (classNum == null || classNum.equals("0") || date == null || date.isEmpty()) {
-                req.getSession().setAttribute("attendError", "クラスと日付を選択してください。");
+                req.getSession().setAttribute("attendError", "入学年度、クラスと日付を選択してください。");
                 res.sendRedirect("AttendanceRegist.action");
                 return;
             }

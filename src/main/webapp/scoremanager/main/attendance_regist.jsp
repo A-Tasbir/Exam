@@ -54,6 +54,7 @@
                                 <th class="text-center">出席(O)</th>
                                 <th class="text-center">欠席(X)</th>
                                 <th class="text-center">遅刻(T)</th>
+                                <th class="text-center">早退(S)</th>
                             </tr>
                             <c:forEach var="s" items="${students}" varStatus="st">
                                 <tr>
@@ -78,6 +79,12 @@
                                                 <c:if test="${a.studentNo==s.no && a.status=='T'}">checked</c:if>
                                             </c:forEach> />
                                     </td>
+                                    <td class="text-center">
+    									<input type="radio" name="status_${st.index}" value="S"
+        									<c:forEach var="a" items="${existing}">
+            									<c:if test="${a.studentNo==s.no && a.status=='S'}">checked</c:if>
+        									</c:forEach> />
+									</td>
                                 </tr>
                             </c:forEach>
                         </table>

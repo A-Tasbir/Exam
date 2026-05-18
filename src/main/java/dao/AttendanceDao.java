@@ -224,4 +224,40 @@ public class AttendanceDao extends Dao {
 
         return count;
     }
-}
+    
+    public int countAllByMonth(String studentNo, String schoolCd, int year, int month) throws Exception {
+        Connection con = getConnection();
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM ATTENDANCE WHERE STUDENT_NO=? AND SCHOOL_CD=? AND YEAR(ATTENDANCE_DATE)=? AND MONTH(ATTENDANCE_DATE)=?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, studentNo);
+            ps.setString(2, schoolCd);
+            ps.setInt(3, year);
+            ps.setInt(4, month);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) count = rs.getInt(1);
+        } finally {
+            con.close();
+        }
+        return count;
+    }
+
+    public int countByStatusAndMonth(String studentNo, String schoolCd, String status, int year, int month) throws Exception {
+        Connection con = getConnection();
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM ATTENDANCE WHERE STUDENT_NO=? AND SCHOOL_CD=? AND STATUS=? AND YEAR(ATTENDANCE_DATE)=? AND MONTH(ATTENDANCE_DATE)=?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, studentNo);
+            ps.setString(2, schoolCd);
+            ps.setString(3, status);
+            ps.setInt(4, year);
+            ps.setInt(5, month);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) count = rs.getInt(1);
+        } finally {
+            con.close();
+        }
+        return count;
+    }
+
+} 

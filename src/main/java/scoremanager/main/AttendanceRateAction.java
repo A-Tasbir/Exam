@@ -23,35 +23,63 @@ public class AttendanceRateAction extends Action {
         List<String> classNumSet = new ClassNumDao().filter(schoolCd);
         req.setAttribute("classNumSet", classNumSet);
 
-        // 入学年度プルダウン
         int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
         List<Integer> entYearSet = new ArrayList<>();
         for (int i = currentYear - 10; i <= currentYear + 1; i++) entYearSet.add(i);
         req.setAttribute("entYearSet", entYearSet);
 
-        String classNum   = req.getParameter("classNum");
-        String entYearStr = req.getParameter("entYear");
+        List<Integer> monthSet = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) monthSet.add(i);
+        req.setAttribute("monthSet", monthSet);
+
+        String classNum      = req.getParameter("classNum");
+        String entYearStr    = req.getParameter("entYear");
+        String attendYearStr = req.getParameter("attendYear");
+        String monthStr      = req.getParameter("month");
 
         req.setAttribute("entYear", entYearStr);
+        req.setAttribute("attendYear", attendYearStr);
+        req.setAttribute("classNum", classNum);
+        req.setAttribute("month", monthStr);
 
         if (classNum != null && !classNum.equals("0")) {
 
             List<Student> allStudents = new StudentDao().filterAll(schoolCd);
             AttendanceDao attendanceDao = new AttendanceDao();
 
+            int month = (monthStr != null && !monthStr.equals("0")) ?
+                        Integer.parseInt(monthStr) : 0;
+            int attendYear = (attendYearStr != null && !attendYearStr.equals("0")) ?
+                             Integer.parseInt(attendYearStr) : 0;
+            int entYear = (entYearStr != null && !entYearStr.equals("0")) ?
+                          Integer.parseInt(entYearStr) : 0;
+
             List<java.util.Map<String, Object>> rows = new ArrayList<>();
+
             for (Student s : allStudents) {
                 if (!s.getClassNum().equals(classNum)) continue;
-                // 入学年度 filter
-                if (entYearStr != null && !entYearStr.equals("0")) {
-                    if (s.getEntYear() != Integer.parseInt(entYearStr)) continue;
+                if (entYear > 0 && s.getEntYear() != entYear) continue;
+
+                int total, present, absent, late, early;
+
+                if (month > 0 && attendYear > 0) {
+                    // 月ごと
+                    total   = attendanceDao.countAllByMonth(s.getNo(), schoolCd, attendYear, month);
+                    present = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "O", attendYear, month);
+                    absent  = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "X", attendYear, month);
+                    late    = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "T", attendYear, month);
+                    early   = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "S", attendYear, month);
+                } else {
+                    // 年間
+                    total   = attendanceDao.countAll(s.getNo(), schoolCd);
+                    present = attendanceDao.countByStatus(s.getNo(), schoolCd, "O");
+                    absent  = attendanceDao.countByStatus(s.getNo(), schoolCd, "X");
+                    late    = attendanceDao.countByStatus(s.getNo(), schoolCd, "T");
+                    early   = attendanceDao.countByStatus(s.getNo(), schoolCd, "S");
                 }
 
-                int total   = attendanceDao.countAll(s.getNo(), schoolCd);
-                int present = attendanceDao.countByStatus(s.getNo(), schoolCd, "O");
-                int absent  = attendanceDao.countByStatus(s.getNo(), schoolCd, "X");
-                int late    = attendanceDao.countByStatus(s.getNo(), schoolCd, "T");
-                double rate = total > 0 ? (double)(present + late * 0.5) / total * 100 : 0;
+                double rate = total > 0 ?
+                    (double)(present + late * 0.5 + early * 0.5) / total * 100 : 0;
 
                 java.util.Map<String, Object> row = new java.util.HashMap<>();
                 row.put("studentNo", s.getNo());
@@ -60,12 +88,15 @@ public class AttendanceRateAction extends Action {
                 row.put("present", present);
                 row.put("absent", absent);
                 row.put("late", late);
+                row.put("early", early);
                 row.put("rate", String.format("%.1f", rate));
                 rows.add(row);
             }
 
             req.setAttribute("rows", rows);
-            req.setAttribute("classNum", classNum);
+
+        } else if (classNum != null) {
+            req.setAttribute("error", "クラスを選択してください。");
         }
 
         req.getRequestDispatcher("attendance_rate.jsp").forward(req, res);

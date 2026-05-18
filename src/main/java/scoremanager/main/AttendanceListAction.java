@@ -66,6 +66,8 @@ public class AttendanceListAction extends Action {
             req.setAttribute("rows", rows);
             req.setAttribute("classNum", classNum);
             req.setAttribute("date", date);
+        } else if (classNum != null || date != null) {
+            req.setAttribute("error", "クラスと日付を選択してください。");
         }
 
         req.getRequestDispatcher("attendance_list.jsp").forward(req, res);

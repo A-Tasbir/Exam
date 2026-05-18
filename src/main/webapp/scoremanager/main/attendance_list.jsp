@@ -36,6 +36,9 @@
                         <button type="submit" class="btn btn-secondary">検索</button>
                     </div>
                 </form>
+                <c:if test="${!empty error}">
+    				<div class="text-danger px-3 mb-3">${error}</div>
+				</c:if>
 
                 <c:if test="${!empty rows}">
                     <table class="table table-hover w-100">
@@ -53,6 +56,7 @@
                                         <c:when test="${row.status=='O'}">○ 出席</c:when>
                                         <c:when test="${row.status=='X'}">× 欠席</c:when>
                                         <c:when test="${row.status=='T'}">△ 遅刻</c:when>
+                                        <c:when test="${row.status=='S'}">▽ 早退</c:when>
                                         <c:otherwise>− 未登録</c:otherwise>
                                     </c:choose>
                                 </td>
