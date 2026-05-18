@@ -302,6 +302,30 @@ a:visited {
 .dark-mode .attendance-card{
 	background-color:#2f4f4f;
 }
+.dark-mode .alert-success {
+    background-color: #1f3b2e !important;
+    color: #b6f3d0 !important;
+    border-color: #2e5a43 !important;
+}
+
+.dark-mode .alert-danger {
+    background-color: #3b1f1f !important;
+    color: #f3b6b6 !important;
+    border-color: #5a2e2e !important;
+}
+
+.dark-mode .alert-warning {
+    background-color: #4a3a1f !important;
+    color: #ffe9b3 !important;
+    border-color: #6b5328 !important;
+}
+
+.dark-mode .alert-info {
+    background-color: #1f3a4a !important;
+    color: #b3e5ff !important;
+    border-color: #28536b !important;
+}
+
 
 </style>
 
