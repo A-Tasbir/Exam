@@ -9,31 +9,34 @@
 
 <section class="me-4">
 
-    <!-- HEADER -->
     <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
         クラス一覧
     </h2>
 
-    <!-- ✅ NEW: REGISTRATION LINK -->
     <div class="px-4 mb-2 d-flex justify-content-end">
         <a href="ClassRegist.action">新規登録</a>
     </div>
 
-    <!-- CONTENT -->
     <div class="px-4">
 
         <c:forEach var="c" items="${classList}">
 
-            <!-- CLASS HEADER -->
-            <div class="mb-3 p-2 ">
+            <div class="mb-3 p-2">
                 <strong>クラス: ${c.classNum}</strong>
                 <a href="ClassEdit.action?classNum=${c.classNum}">変更</a>
             </div>
 
-            <!-- STUDENT TABLE -->
-            <table class="table  mb-4">
+            <table class="table mb-4">
 
-                <thead >
+                <!-- ⭐ FIX: Force consistent column widths (no design change) -->
+                <colgroup>
+                    <col style="width: 20%;">
+                    <col style="width: 40%;">
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                </colgroup>
+
+                <thead>
                     <tr>
                         <th>学生番号</th>
                         <th>氏名</th>
@@ -47,7 +50,6 @@
                     <c:choose>
 
                         <c:when test="${not empty c.students}">
-
                             <c:forEach var="s" items="${c.students}">
                                 <tr>
                                     <td>${s.no}</td>
@@ -61,7 +63,6 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-
                         </c:when>
 
                         <c:otherwise>

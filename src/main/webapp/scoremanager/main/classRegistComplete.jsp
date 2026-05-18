@@ -16,9 +16,10 @@
 
 			<div class="px-4">
 
-				<p class="text-center" style="background-color:#66CC99">
-					クラス情報を登録しました
-				</p>
+				<div class="alert alert-success text-center">
+    					クラス情報を登録しました
+				</div>
+
 
 				<a href="ClassList.action">クラス一覧へ戻る</a>
 
