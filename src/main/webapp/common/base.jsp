@@ -394,6 +394,14 @@ nav a:hover {
     color: #9fd0ff !important; /* ホバー時：明るい青 */
     text-shadow: 0 0 6px rgba(159, 208, 255, 0.6);
 }
+/* Error message color */
+.error-message {
+    color: var(--text-color) !important; /* Light mode: stays dark */
+}
+
+.dark-mode .error-message {
+    color: #ffffff !important; /* Dark mode: white */
+}
 
 
 

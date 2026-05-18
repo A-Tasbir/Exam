@@ -18,9 +18,10 @@
 			<div class="px-4">
 
 				<!-- SUCCESS MESSAGE (same style) -->
-				<p class="text-center" style="background-color:#66CC99">
-					クラス情報を変更しました
-				</p>
+				<div class="alert alert-success text-center">
+    				クラス情報を変更しました
+				</div>
+
 
 				<!-- BACK LINK (same pattern as others) -->
 				<a href="ClassList.action">クラス一覧へ戻る</a>
