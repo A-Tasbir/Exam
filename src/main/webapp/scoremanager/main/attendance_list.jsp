@@ -2,7 +2,51 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/common/base.jsp">
     <c:param name="title">得点管理システム</c:param>
-    <c:param name="scripts"></c:param>
+    <c:param name="scripts">
+    	<style>
+@media print {
+    header, nav, footer, .row.border, button, .btn { 
+        display: none !important; 
+    }
+    header.d-flex {
+        display: none !important;
+    }
+    /* header ထဲက div တွေ hide */
+    header > div {
+        display: none !important;
+    }
+    main {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0 !important;
+    }
+    .col-9 {
+        width: 100% !important;
+        border: none !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    .col-3 {
+        display: none !important;
+    }
+    .row {
+        display: block !important;
+    }
+    #wrapper {
+        padding: 0 !important;
+    }
+    .container {
+        padding: 0 !important;
+    }
+   
+    input[type="text"] {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+</style>
+    
+    </c:param>
     <c:param name="content">
         <section class="me-4">
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">出欠一覧</h2>
@@ -63,6 +107,9 @@
                             </tr>
                         </c:forEach>
                     </table>
+                    <div class="mt-3 ms-3">
+    					<button type="button" class="btn btn-outline-secondary" onclick="window.print()">印刷</button>
+					</div>
                 </c:if>
             </div>
         </section>

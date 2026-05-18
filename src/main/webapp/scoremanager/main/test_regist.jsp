@@ -2,20 +2,64 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/common/base.jsp">
     <c:param name="title">得点管理システム</c:param>
-    <c:param name="scripts"></c:param>
+    <c:param name="scripts">
+<style>
+@media print {
+    header, nav, footer, .row.border, button, .btn { 
+        display: none !important; 
+    }
+    header.d-flex {
+        display: none !important;
+    }
+    /* header ထဲက div တွေ hide */
+    header > div {
+        display: none !important;
+    }
+    main {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0 !important;
+    }
+    .col-9 {
+        width: 100% !important;
+        border: none !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+    .col-3 {
+        display: none !important;
+    }
+    .row {
+        display: block !important;
+    }
+    #wrapper {
+        padding: 0 !important;
+    }
+    .container {
+        padding: 0 !important;
+    }
+    
+    input[type="text"] {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+</style>
+    </c:param>
     <c:param name="content">
         <section class="me-4">
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
             <div class="px-4 mt-3">
 
                 <c:if test="${!empty sessionScope.registError}">
-    				<div class="text-danger mb-3">${sessionScope.registError}</div>
-    				<c:remove var="registError" scope="session" />
-				</c:if>
-				
-				<c:if test="${!empty error}">
-    				<div class="text-danger mb-3">${error}</div>
-				</c:if>
+                    <div class="text-danger mb-3">${sessionScope.registError}</div>
+                    <c:remove var="registError" scope="session" />
+                </c:if>
+
+                <c:if test="${!empty error}">
+                    <div class="text-danger mb-3">${error}</div>
+                </c:if>
+
                 <%-- 検索フォーム --%>
                 <form method="get" action="TestRegistExecute.action" class="row border mx-3 mb-3 py-2 align-items-center rounded">
                     <div class="col-3">
@@ -61,8 +105,9 @@
 
                 <%-- 検索結果 --%>
                 <c:if test="${!empty searchError}">
-    				<div class="text-danger px-3 mb-3">${searchError}</div>
-				</c:if>
+                    <div class="text-danger px-3 mb-3">${searchError}</div>
+                </c:if>
+
                 <c:if test="${!empty tests}">
                     <div class="px-3 mb-2">科目：${subjectName}（${no}回）</div>
                     <form method="post" action="TestRegistExecute.action">
@@ -87,8 +132,9 @@
                                     <td>${row.studentName}</td>
                                     <td>
                                         <input type="hidden" name="studentNo_${s.index}" value="${row.studentNo}" />
-                                        <input type="text" name="point_${s.index}" value="${row.point>= 0 ? row.point : ''}"
-                                               class="form-control" w-100" />
+                                        <input type="text" name="point_${s.index}"
+                                               value="${row.point >= 0 ? row.point : ''}"
+                                               class="form-control w-100" />
                                         <c:if test="${!empty row.pointError}">
                                             <div class="text-warning small">${row.pointError}</div>
                                         </c:if>
@@ -98,6 +144,7 @@
                         </table>
                         <input type="hidden" name="count" value="${tests.size()}" />
                         <button type="submit" class="btn btn-secondary ms-3">登録して終了</button>
+                        <button type="button" class="btn btn-outline-secondary ms-2" onclick="window.print()">印刷</button>
                     </form>
                 </c:if>
 
