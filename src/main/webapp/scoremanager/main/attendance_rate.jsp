@@ -3,7 +3,15 @@
 <c:import url="/common/base.jsp">
     <c:param name="title">得点管理システム</c:param>
     <c:param name="scripts">
-    	<style>
+        <style>
+.alert-red {
+    background-color: #c0392b !important;
+    color: #fff !important;
+}
+.alert-yellow {
+    background-color: #b7950b !important;
+    color: #fff !important;
+}
 @media print {
     header, nav, footer, .row.border, button, .btn { 
         display: none !important; 
@@ -11,7 +19,6 @@
     header.d-flex {
         display: none !important;
     }
-    
     header > div {
         display: none !important;
     }
@@ -38,14 +45,12 @@
     .container {
         padding: 0 !important;
     }
-   
     input[type="text"] {
         border: none !important;
         box-shadow: none !important;
     }
 }
-</style>
-    
+        </style>
     </c:param>
     <c:param name="content">
         <section class="me-4">
@@ -100,6 +105,19 @@
                 </c:if>
 
                 <c:if test="${!empty rows}">
+
+                    <%-- アラート凡例 --%>
+                    <div class="mb-2 ms-3 d-flex gap-3 small">
+                        <span>
+                            <span style="background:#c0392b;padding:2px 8px;border-radius:3px;color:#fff;">■</span>
+                            出席率80%以下（要注意）
+                        </span>
+                        <span>
+                            <span style="background:#b7950b;padding:2px 8px;border-radius:3px;color:#fff;">■</span>
+                            出席率90%以下（注意）
+                        </span>
+                    </div>
+
                     <table class="table table-hover w-100">
                         <tr>
                             <th>学生番号</th>
@@ -112,7 +130,17 @@
                             <th class="text-center">出席率</th>
                         </tr>
                         <c:forEach var="row" items="${rows}">
-                            <tr>
+                            <c:choose>
+                                <c:when test="${row.rate <= 80}">
+                                    <tr class="alert-red">
+                                </c:when>
+                                <c:when test="${row.rate <= 90}">
+                                    <tr class="alert-yellow">
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                </c:otherwise>
+                            </c:choose>
                                 <td>${row.studentNo}</td>
                                 <td>${row.studentName}</td>
                                 <td class="text-center">${row.present}</td>
@@ -120,14 +148,16 @@
                                 <td class="text-center">${row.late}</td>
                                 <td class="text-center">${row.early}</td>
                                 <td class="text-center">${row.total}</td>
-                                <td class="text-center">${row.rate}%</td>
+                                <td class="text-center fw-bold">${row.rateStr}%</td>
                             </tr>
                         </c:forEach>
                     </table>
+
                     <div class="mt-3 ms-3">
-    					<button type="button" class="btn btn-outline-secondary" onclick="window.print()">印刷</button>
-					</div>
+                        <button type="button" class="btn btn-outline-secondary" onclick="window.print()">印刷</button>
+                    </div>
                 </c:if>
+
             </div>
         </section>
     </c:param>
