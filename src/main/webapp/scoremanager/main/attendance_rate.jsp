@@ -11,7 +11,7 @@
     header.d-flex {
         display: none !important;
     }
-    /* header ထဲက div တွေ hide */
+    
     header > div {
         display: none !important;
     }

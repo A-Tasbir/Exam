@@ -63,14 +63,23 @@ public class AttendanceRateAction extends Action {
                 int total, present, absent, late, early;
 
                 if (month > 0 && attendYear > 0) {
-                    // 月ごと
+                    // 月・年 両方指定
                     total   = attendanceDao.countAllByMonth(s.getNo(), schoolCd, attendYear, month);
                     present = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "O", attendYear, month);
                     absent  = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "X", attendYear, month);
                     late    = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "T", attendYear, month);
                     early   = attendanceDao.countByStatusAndMonth(s.getNo(), schoolCd, "S", attendYear, month);
+
+                } else if (attendYear > 0) {
+                    // ✅ 月=全て、年だけ指定 → その年のみ
+                    total   = attendanceDao.countAllByYear(s.getNo(), schoolCd, attendYear);
+                    present = attendanceDao.countByStatusAndYear(s.getNo(), schoolCd, "O", attendYear);
+                    absent  = attendanceDao.countByStatusAndYear(s.getNo(), schoolCd, "X", attendYear);
+                    late    = attendanceDao.countByStatusAndYear(s.getNo(), schoolCd, "T", attendYear);
+                    early   = attendanceDao.countByStatusAndYear(s.getNo(), schoolCd, "S", attendYear);
+
                 } else {
-                    // 年間
+                    // 年も月も全て → 全期間
                     total   = attendanceDao.countAll(s.getNo(), schoolCd);
                     present = attendanceDao.countByStatus(s.getNo(), schoolCd, "O");
                     absent  = attendanceDao.countByStatus(s.getNo(), schoolCd, "X");
