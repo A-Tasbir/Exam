@@ -98,7 +98,8 @@ public class AttendanceRateAction extends Action {
                 row.put("absent", absent);
                 row.put("late", late);
                 row.put("early", early);
-                row.put("rate", String.format("%.1f", rate));
+                row.put("rate", rate);
+                row.put("rateStr", String.format("%.1f", rate));
                 rows.add(row);
             }
 

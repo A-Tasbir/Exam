@@ -38,56 +38,91 @@
 
 			</div>
 
-			<table class="table table-hover">
+			<c:if test="${empty list}">
 
-				<thead>
+				<div class="alert alert-info">
 
-					<tr>
+					科目情報がありません。
 
-						<th>科目コード</th>
+				</div>
 
-						<th>科目名</th>
+			</c:if>
 
-						<th></th>
+			<c:if test="${not empty list}">
 
-					</tr>
+				<table class="table table-hover">
 
-				</thead>
-
-				<tbody>
-
-					<c:forEach var="subject" items="${list}">
+					<thead>
 
 						<tr>
 
-							<td>${subject.cd}</td>
+							<th>科目コード</th>
 
-							<td>${subject.name}</td>
+							<th>科目名</th>
 
-							<td>
-
-								<a href="SubjectEdit.action?cd=${subject.cd}">
-									変更
-								</a>
-
-								&nbsp;
-
-								<a href="SubjectDelete.action?cd=${subject.cd}"
-									onclick="return confirm('本当に削除しますか？');">
-
-									削除
-
-								</a>
-
-							</td>
+							<th></th>
 
 						</tr>
 
-					</c:forEach>
+					</thead>
 
-				</tbody>
+					<tbody>
 
-			</table>
+						<c:forEach var="subject"
+							items="${list}">
+
+							<tr>
+
+								<td>
+
+									${subject.cd}
+
+								</td>
+
+								<td>
+
+									${subject.name}
+
+								</td>
+
+								<td>
+
+									<a href="SubjectEdit.action?cd=${subject.cd}"
+										class="btn btn-sm btn-outline-primary">
+
+										変更
+
+									</a>
+
+									<form action="SubjectDeleteExecute.action"
+										method="post"
+										style="display:inline;">
+
+										<input type="hidden"
+											name="cd"
+											value="${subject.cd}">
+
+										<button type="submit"
+											class="btn btn-sm btn-outline-danger"
+											onclick="return confirm('本当に削除しますか？');">
+
+											削除
+
+										</button>
+
+									</form>
+
+								</td>
+
+							</tr>
+
+						</c:forEach>
+
+					</tbody>
+
+				</table>
+
+			</c:if>
 
 		</section>
 

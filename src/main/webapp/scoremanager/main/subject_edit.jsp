@@ -17,7 +17,8 @@
 				科目変更
 			</h2>
 
-			<form action="SubjectEditExecute.action" method="post">
+			<form action="SubjectEditExecute.action"
+				method="post">
 
 				<input type="hidden"
 					name="oldCd"
@@ -32,11 +33,20 @@
 					<input type="text"
 						name="cd"
 						value="${subject.cd}"
+						maxlength="3"
+						required
+						autocomplete="off"
 						class="form-control">
 
-					<div class="text-warning">
-						${errorCd}
-					</div>
+					<c:if test="${not empty errorCd}">
+
+						<div class="text-danger">
+
+							${errorCd}
+
+						</div>
+
+					</c:if>
 
 				</div>
 
@@ -49,11 +59,20 @@
 					<input type="text"
 						name="name"
 						value="${subject.name}"
+						maxlength="20"
+						required
+						autocomplete="off"
 						class="form-control">
 
-					<div class="text-warning">
-						${errorName}
-					</div>
+					<c:if test="${not empty errorName}">
+
+						<div class="text-danger">
+
+							${errorName}
+
+						</div>
+
+					</c:if>
 
 				</div>
 
