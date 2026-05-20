@@ -36,13 +36,13 @@
 				<a href="SubjectCreate.action"
 					class="me-5">
 
-					科目登録へ戻る
+					戻る
 
 				</a>
 
 				<a href="SubjectList.action">
 
-					科目一覧へ戻る
+					科目一覧
 
 				</a>
 

@@ -77,6 +77,13 @@ public class SubjectCreateExecuteAction extends Action {
 
 		dao.insert(subject);
 
-		res.sendRedirect("SubjectList.action");
+		// 完了メッセージ
+		req.setAttribute("message", "科目を登録しました。");
+
+		// 完了画面へ
+		RequestDispatcher rd =
+				req.getRequestDispatcher("subject_done.jsp");
+
+		rd.forward(req, res);
 	}
 }

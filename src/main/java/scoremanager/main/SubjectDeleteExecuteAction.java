@@ -3,6 +3,7 @@ package scoremanager.main;
 import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -51,7 +52,16 @@ public class SubjectDeleteExecuteAction extends Action {
         // 削除実行
         dao.delete(schoolCd, cd);
 
-        res.sendRedirect(
-                "SubjectList.action");
+        // 完了メッセージ
+        req.setAttribute(
+                "message",
+                "科目を削除しました。");
+
+        // 完了画面へ
+        RequestDispatcher rd =
+                req.getRequestDispatcher(
+                        "subject_delete_done.jsp");
+
+        rd.forward(req, res);
     }
 }
