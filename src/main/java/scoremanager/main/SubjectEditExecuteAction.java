@@ -95,6 +95,16 @@ public class SubjectEditExecuteAction extends Action {
 
 		dao.update(subject, oldCd);
 
-		res.sendRedirect("SubjectList.action");
+		// 完了メッセージ
+		req.setAttribute(
+				"message",
+				"科目を変更しました。");
+
+		// 完了画面へ
+		RequestDispatcher rd =
+				req.getRequestDispatcher(
+						"subject_update_done.jsp");
+
+		rd.forward(req, res);
 	}
 }
