@@ -17,7 +17,8 @@
 				科目登録
 			</h2>
 
-			<form action="SubjectCreateExecute.action" method="post">
+			<form action="SubjectCreateExecute.action"
+				method="post">
 
 				<div class="mb-3">
 
@@ -27,7 +28,21 @@
 
 					<input type="text"
 						name="cd"
+						value="${cd}"
+						maxlength="3"
+						required
+						autocomplete="off"
 						class="form-control">
+
+					<c:if test="${not empty errorCd}">
+
+						<div class="text-danger">
+
+							${errorCd}
+
+						</div>
+
+					</c:if>
 
 				</div>
 
@@ -39,7 +54,21 @@
 
 					<input type="text"
 						name="name"
+						value="${name}"
+						maxlength="20"
+						required
+						autocomplete="off"
 						class="form-control">
+
+					<c:if test="${not empty errorName}">
+
+						<div class="text-danger">
+
+							${errorName}
+
+						</div>
+
+					</c:if>
 
 				</div>
 
