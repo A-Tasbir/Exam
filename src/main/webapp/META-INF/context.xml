@@ -11,5 +11,6 @@
 		url="jdbc:h2:tcp://localhost/~/exam"
 		username="sa"
 		password=""
+		factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
 	/>
 </Context>
