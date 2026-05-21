@@ -9,102 +9,120 @@ import tool.Action;
 
 public class SubjectEditExecuteAction extends Action {
 
-	@Override
-	public void execute(
-			HttpServletRequest req,
-			HttpServletResponse res
-	) throws Exception {
+    @Override
+    public void execute(HttpServletRequest req,
+                        HttpServletResponse res) throws Exception {
 
-		String oldCd = req.getParameter("oldCd");
-		String cd = req.getParameter("cd");
-		String name = req.getParameter("name");
+        // パラメータ取得
+        String oldCd = req.getParameter("oldCd");
+        String cd = req.getParameter("cd");
+        String name = req.getParameter("name");
 
-		if (cd != null) {
-			cd = cd.trim();
-		}
+        // 前後空白除去
+        if (cd != null) {
+            cd = cd.trim();
+        }
 
-		if (name != null) {
-			name = name.trim();
-		}
+        if (name != null) {
+            name = name.trim();
+        }
 
-		String errorCd = "";
-		String errorName = "";
+        // エラーメッセージ
+        String errorCd = "";
+        String errorName = "";
 
-		SubjectDao dao = new SubjectDao();
+        SubjectDao dao = new SubjectDao();
 
-		Subject old = dao.get("oom", oldCd);
+        // 変更前データ取得
+        Subject old = dao.get("oom", oldCd);
 
-		if (old == null) {
+        // データ存在確認
+        if (old == null) {
+            errorName = "科目が存在していません";
+        }
 
-			errorName = "科目が存在していません";
+        // =========================
+        // 入力チェック
+        // =========================
 
-		}
+        // 科目コード必須
+        if (cd == null || cd.isEmpty()) {
+            errorCd = "科目コードを入力してください";
+        }
 
-		if (cd == null || cd.isEmpty()) {
-			errorCd = "科目コードを入力してください";
-		}
+        // 科目名必須
+        if (name == null || name.isEmpty()) {
+            errorName = "科目名を入力してください";
+        }
 
-		if (name == null || name.isEmpty()) {
-			errorName = "科目名を入力してください";
-		}
+        // 科目コード文字数
+        if (cd != null && cd.length() > 3) {
+            errorCd = "科目コードは3文字以内で入力してください";
+        }
 
-		if (cd != null && cd.length() > 3) {
-			errorCd = "科目コードは3文字以内で入力してください";
-		}
+        // 科目名文字数
+        if (name != null && name.length() > 20) {
+            errorName = "科目名は20文字以内で入力してください";
+        }
 
-		if (name != null && name.length() > 20) {
-			errorName = "科目名は20文字以内で入力してください";
-		}
+        // 科目コード重複チェック
+        if (!oldCd.equals(cd)) {
 
-		if (!oldCd.equals(cd)) {
+            Subject exists = dao.get("oom", cd);
 
-			Subject exists =
-					dao.get("oom", cd);
+            if (exists != null) {
+                errorCd = "科目コードが重複しています";
+            }
+        }
 
-			if (exists != null) {
-				errorCd = "科目コードが重複しています";
-			}
-		}
+        // =========================
+        // エラー時
+        // =========================
+        if (!errorCd.isEmpty() || !errorName.isEmpty()) {
 
-		if (!errorCd.isEmpty() || !errorName.isEmpty()) {
+            Subject subject = new Subject();
 
-			Subject subject = new Subject();
+            subject.setSchoolCd("oom");
+            subject.setCd(cd);
+            subject.setName(name);
 
-			subject.setSchoolCd("oom");
-			subject.setCd(cd);
-			subject.setName(name);
+            // 入力値保持
+            req.setAttribute("subject", subject);
 
-			req.setAttribute("subject", subject);
+            // エラーメッセージ設定
+            req.setAttribute("errorCd", errorCd);
+            req.setAttribute("errorName", errorName);
 
-			req.setAttribute("errorCd", errorCd);
-			req.setAttribute("errorName", errorName);
+            // 編集画面へ戻る
+            RequestDispatcher rd =
+                    req.getRequestDispatcher("subject_edit.jsp");
 
-			RequestDispatcher rd =
-					req.getRequestDispatcher("subject_edit.jsp");
+            rd.forward(req, res);
 
-			rd.forward(req, res);
+            return;
+        }
 
-			return;
-		}
+        // =========================
+        // 更新処理
+        // =========================
+        Subject subject = new Subject();
 
-		Subject subject = new Subject();
+        subject.setSchoolCd("oom");
+        subject.setCd(cd);
+        subject.setName(name);
 
-		subject.setSchoolCd("oom");
-		subject.setCd(cd);
-		subject.setName(name);
+        dao.update(subject, oldCd);
 
-		dao.update(subject, oldCd);
+        // 完了メッセージ
+        req.setAttribute(
+                "message",
+                "科目を変更しました。");
 
-		// 完了メッセージ
-		req.setAttribute(
-				"message",
-				"科目を変更しました。");
+        // 完了画面へ
+        RequestDispatcher rd =
+                req.getRequestDispatcher(
+                        "subject_update_done.jsp");
 
-		// 完了画面へ
-		RequestDispatcher rd =
-				req.getRequestDispatcher(
-						"subject_update_done.jsp");
-
-		rd.forward(req, res);
-	}
+        rd.forward(req, res);
+    }
 }

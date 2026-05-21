@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java"
+	contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
@@ -13,13 +14,20 @@
 
 		<section class="me-4">
 
+			<!-- =========================
+			     タイトル
+			========================= -->
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
 				科目登録
 			</h2>
 
+			<!-- =========================
+			     登録フォーム
+			========================= -->
 			<form action="SubjectCreateExecute.action"
-				method="post">
+				  method="post">
 
+				<!-- 科目コード -->
 				<div class="mb-3">
 
 					<label class="form-label">
@@ -27,13 +35,14 @@
 					</label>
 
 					<input type="text"
-						name="cd"
-						value="${cd}"
-						maxlength="3"
-						required
-						autocomplete="off"
-						class="form-control">
+						   name="cd"
+						   value="${cd}"
+						   maxlength="3"
+						   required
+						   autocomplete="off"
+						   class="form-control">
 
+					<!-- エラーメッセージ -->
 					<c:if test="${not empty errorCd}">
 
 						<div class="text-danger">
@@ -46,6 +55,7 @@
 
 				</div>
 
+				<!-- 科目名 -->
 				<div class="mb-3">
 
 					<label class="form-label">
@@ -53,13 +63,14 @@
 					</label>
 
 					<input type="text"
-						name="name"
-						value="${name}"
-						maxlength="20"
-						required
-						autocomplete="off"
-						class="form-control">
+						   name="name"
+						   value="${name}"
+						   maxlength="20"
+						   required
+						   autocomplete="off"
+						   class="form-control">
 
+					<!-- エラーメッセージ -->
 					<c:if test="${not empty errorName}">
 
 						<div class="text-danger">
@@ -72,8 +83,9 @@
 
 				</div>
 
+				<!-- 登録ボタン -->
 				<button type="submit"
-					class="btn btn-primary">
+						class="btn btn-primary">
 
 					登録
 
