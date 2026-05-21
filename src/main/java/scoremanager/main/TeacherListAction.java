@@ -10,31 +10,41 @@ import tool.Action;
 
 public class TeacherListAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @Override
+    public void execute(HttpServletRequest request,
+                        HttpServletResponse response) throws Exception {
 
-		Object obj = request.getSession().getAttribute("user");
+        // セッションからログインユーザー取得
+        Object obj = request.getSession().getAttribute("user");
 
-		if (!(obj instanceof Teacher)) {
-			request.getRequestDispatcher("/error.jsp").forward(request, response);
-			return;
-		}
+        // ログイン確認
+        if (!(obj instanceof Teacher)) {
+            request.getRequestDispatcher("/error.jsp")
+                   .forward(request, response);
+            return;
+        }
 
-		Teacher loginUser = (Teacher) obj;
+        Teacher loginUser = (Teacher) obj;
 
-		if (!loginUser.isAdmin()) {
-			request.getRequestDispatcher("/error.jsp").forward(request, response);
-			return;
-		}
+        // 管理者権限チェック
+        if (!loginUser.isAdmin()) {
+            request.getRequestDispatcher("/error.jsp")
+                   .forward(request, response);
+            return;
+        }
 
-		String schoolCd = loginUser.getSchool().getCd();
+        // 学校コード取得
+        String schoolCd = loginUser.getSchool().getCd();
 
-		TeacherDao dao = new TeacherDao();
-		List<Teacher> list = dao.findBySchool(schoolCd);
+        // 教員一覧取得
+        TeacherDao dao = new TeacherDao();
+        List<Teacher> list = dao.findBySchool(schoolCd);
 
-		request.setAttribute("list", list);
+        // JSPへデータ渡し
+        request.setAttribute("list", list);
 
-		request.getRequestDispatcher("/scoremanager/main/teacherList.jsp")
-			.forward(request, response);
-	}
+        // 一覧画面表示
+        request.getRequestDispatcher("/scoremanager/main/teacherList.jsp")
+               .forward(request, response);
+    }
 }

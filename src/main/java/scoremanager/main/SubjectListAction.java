@@ -10,24 +10,27 @@ import tool.Action;
 
 public class SubjectListAction extends Action {
 
-	@Override
-	public void execute(
-			HttpServletRequest req,
-			HttpServletResponse res
-	) throws Exception {
+    @Override
+    public void execute(HttpServletRequest req,
+                        HttpServletResponse res) throws Exception {
 
-		String url = "subjectList.jsp";
+        // 遷移先JSP
+        String url = "subjectList.jsp";
 
-		String schoolCd = "oom";
+        // 学校コード
+        String schoolCd = "oom";
 
-		SubjectDao dao = new SubjectDao();
+        // 科目一覧取得
+        SubjectDao dao = new SubjectDao();
 
-		List<Subject> list =
-				dao.filter(schoolCd);
+        List<Subject> list =
+                dao.filter(schoolCd);
 
-		req.setAttribute("list", list);
+        // JSPへデータ渡し
+        req.setAttribute("list", list);
 
-		req.getRequestDispatcher(url)
-				.forward(req, res);
-	}
+        // 画面表示
+        req.getRequestDispatcher(url)
+           .forward(req, res);
+    }
 }

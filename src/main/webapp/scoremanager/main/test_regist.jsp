@@ -1,154 +1,380 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+
 <c:import url="/common/base.jsp">
-    <c:param name="title">得点管理システム</c:param>
-    <c:param name="scripts">
-<style>
-@media print {
-    header, nav, footer, .row.border, button, .btn { 
-        display: none !important; 
-    }
-    header.d-flex {
-        display: none !important;
-    }
-    /* header ထဲက div တွေ hide */
-    header > div {
-        display: none !important;
-    }
-    main {
-        width: 100% !important;
-        min-height: auto !important;
-        padding: 0 !important;
-    }
-    .col-9 {
-        width: 100% !important;
-        border: none !important;
-        flex: 0 0 100% !important;
-        max-width: 100% !important;
-    }
-    .col-3 {
-        display: none !important;
-    }
-    .row {
-        display: block !important;
-    }
-    #wrapper {
-        padding: 0 !important;
-    }
-    .container {
-        padding: 0 !important;
-    }
-    
-    input[type="text"] {
-        border: none !important;
-        box-shadow: none !important;
-    }
-}
-</style>
-    </c:param>
-    <c:param name="content">
-        <section class="me-4">
-            <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
-            <div class="px-4 mt-3">
 
-                <c:if test="${!empty sessionScope.registError}">
-                    <div class="text-danger mb-3">${sessionScope.registError}</div>
-                    <c:remove var="registError" scope="session" />
-                </c:if>
+	<c:param name="title">
+		得点管理システム
+	</c:param>
 
-                <c:if test="${!empty error}">
-                    <div class="text-danger mb-3">${error}</div>
-                </c:if>
+	<c:param name="scripts">
 
-                <%-- 検索フォーム --%>
-                <form method="get" action="TestRegistExecute.action" class="row border mx-3 mb-3 py-2 align-items-center rounded">
-                    <div class="col-3">
-                        <label class="form-label">入学年度</label>
-                        <select name="entYear" class="form-select">
-                            <option value="0">----------</option>
-                            <c:forEach var="year" items="${entYearSet}">
-                                <option value="${year}" <c:if test="${year==entYear}">selected</c:if>>${year}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="col-2">
-                        <label class="form-label">クラス</label>
-                        <select name="classNum" class="form-select">
-                            <option value="0">----------</option>
-                            <c:forEach var="num" items="${classNumSet}">
-                                <option value="${num}" <c:if test="${num==classNum}">selected</c:if>>${num}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="col-3">
-                        <label class="form-label">科目</label>
-                        <select name="subjectCd" class="form-select">
-                            <option value="0">----------</option>
-                            <c:forEach var="subject" items="${subjectSet}">
-                                <option value="${subject.cd}" <c:if test="${subject.cd==subjectCd}">selected</c:if>>${subject.name}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="col-2">
-                        <label class="form-label">回数</label>
-                        <select name="no" class="form-select">
-                            <option value="0">----------</option>
-                            <c:forEach var="n" items="${noSet}">
-                                <option value="${n}" <c:if test="${n==no}">selected</c:if>>${n}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="col-2 mt-4">
-                        <button type="submit" class="btn btn-secondary">検索</button>
-                    </div>
-                </form>
+		<style>
 
-                <%-- 検索結果 --%>
-                <c:if test="${!empty searchError}">
-                    <div class="text-danger px-3 mb-3">${searchError}</div>
-                </c:if>
+			/* =========================
+			   印刷時レイアウト
+			========================= */
 
-                <c:if test="${!empty tests}">
-                    <div class="px-3 mb-2">科目：${subjectName}（${no}回）</div>
-                    <form method="post" action="TestRegistExecute.action">
-                        <input type="hidden" name="subjectCd" value="${subjectCd}" />
-                        <input type="hidden" name="schoolCd" value="${schoolCd}" />
-                        <input type="hidden" name="no" value="${no}" />
-                        <input type="hidden" name="entYear" value="${entYear}" />
-                        <input type="hidden" name="classNum" value="${classNum}" />
-                        <table class="table table-hover w-100">
-                            <tr>
-                                <th>入学年度</th>
-                                <th>クラス</th>
-                                <th>学生番号</th>
-                                <th>氏名</th>
-                                <th>点数</th>
-                            </tr>
-                            <c:forEach var="row" items="${tests}" varStatus="s">
-                                <tr>
-                                    <td>${row.entYear}</td>
-                                    <td>${row.classNum}</td>
-                                    <td>${row.studentNo}</td>
-                                    <td>${row.studentName}</td>
-                                    <td>
-                                        <input type="hidden" name="studentNo_${s.index}" value="${row.studentNo}" />
-                                        <input type="text" name="point_${s.index}"
-                                               value="${row.point >= 0 ? row.point : ''}"
-                                               class="form-control w-100" />
-                                        <c:if test="${!empty row.pointError}">
-                                            <div class="text-warning small">${row.pointError}</div>
-                                        </c:if>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                        <input type="hidden" name="count" value="${tests.size()}" />
-                        <button type="submit" class="btn btn-secondary ms-3">登録して終了</button>
-                        <button type="button" class="btn btn-outline-secondary ms-2" onclick="window.print()">印刷</button>
-                    </form>
-                </c:if>
+			@media print {
 
-            </div>
-        </section>
-    </c:param>
+				header,
+				nav,
+				footer,
+				.row.border,
+				button,
+				.btn {
+					display: none !important;
+				}
+
+				header.d-flex {
+					display: none !important;
+				}
+
+				/* header内のdivを非表示 */
+				header > div {
+					display: none !important;
+				}
+
+				main {
+					width: 100% !important;
+					min-height: auto !important;
+					padding: 0 !important;
+				}
+
+				.col-9 {
+					width: 100% !important;
+					border: none !important;
+					flex: 0 0 100% !important;
+					max-width: 100% !important;
+				}
+
+				.col-3 {
+					display: none !important;
+				}
+
+				.row {
+					display: block !important;
+				}
+
+				#wrapper,
+				.container {
+					padding: 0 !important;
+				}
+
+				input[type="text"] {
+					border: none !important;
+					box-shadow: none !important;
+				}
+			}
+
+		</style>
+
+	</c:param>
+
+	<c:param name="content">
+
+		<section class="me-4">
+
+			<!-- タイトル -->
+			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
+				成績管理
+			</h2>
+
+			<div class="px-4 mt-3">
+
+				<!-- セッションエラー -->
+				<c:if test="${!empty sessionScope.registError}">
+					<div class="text-danger mb-3">
+						${sessionScope.registError}
+					</div>
+
+					<c:remove var="registError" scope="session" />
+				</c:if>
+
+				<!-- 通常エラー -->
+				<c:if test="${!empty error}">
+					<div class="text-danger mb-3">
+						${error}
+					</div>
+				</c:if>
+
+				<!-- =========================
+				     検索フォーム
+				========================= -->
+
+				<form method="get"
+					action="TestRegistExecute.action"
+					class="row border mx-3 mb-3 py-2 align-items-center rounded">
+
+					<!-- 入学年度 -->
+					<div class="col-3">
+
+						<label class="form-label">
+							入学年度
+						</label>
+
+						<select name="entYear"
+							class="form-select">
+
+							<option value="0">
+								----------
+							</option>
+
+							<c:forEach var="year"
+								items="${entYearSet}">
+
+								<option value="${year}"
+									<c:if test="${year == entYear}">
+										selected
+									</c:if>>
+
+									${year}
+
+								</option>
+
+							</c:forEach>
+
+						</select>
+
+					</div>
+
+					<!-- クラス -->
+					<div class="col-2">
+
+						<label class="form-label">
+							クラス
+						</label>
+
+						<select name="classNum"
+							class="form-select">
+
+							<option value="0">
+								----------
+							</option>
+
+							<c:forEach var="num"
+								items="${classNumSet}">
+
+								<option value="${num}"
+									<c:if test="${num == classNum}">
+										selected
+									</c:if>>
+
+									${num}
+
+								</option>
+
+							</c:forEach>
+
+						</select>
+
+					</div>
+
+					<!-- 科目 -->
+					<div class="col-3">
+
+						<label class="form-label">
+							科目
+						</label>
+
+						<select name="subjectCd"
+							class="form-select">
+
+							<option value="0">
+								----------
+							</option>
+
+							<c:forEach var="subject"
+								items="${subjectSet}">
+
+								<option value="${subject.cd}"
+									<c:if test="${subject.cd == subjectCd}">
+										selected
+									</c:if>>
+
+									${subject.name}
+
+								</option>
+
+							</c:forEach>
+
+						</select>
+
+					</div>
+
+					<!-- 回数 -->
+					<div class="col-2">
+
+						<label class="form-label">
+							回数
+						</label>
+
+						<select name="no"
+							class="form-select">
+
+							<option value="0">
+								----------
+							</option>
+
+							<c:forEach var="n"
+								items="${noSet}">
+
+								<option value="${n}"
+									<c:if test="${n == no}">
+										selected
+									</c:if>>
+
+									${n}
+
+								</option>
+
+							</c:forEach>
+
+						</select>
+
+					</div>
+
+					<!-- 検索ボタン -->
+					<div class="col-2 mt-4">
+
+						<button type="submit"
+							class="btn btn-secondary">
+
+							検索
+
+						</button>
+
+					</div>
+
+				</form>
+
+				<!-- =========================
+				     検索エラー
+				========================= -->
+
+				<c:if test="${!empty searchError}">
+
+					<div class="text-danger px-3 mb-3">
+						${searchError}
+					</div>
+
+				</c:if>
+
+				<!-- =========================
+				     検索結果
+				========================= -->
+
+				<c:if test="${!empty tests}">
+
+					<div class="px-3 mb-2">
+						科目：${subjectName}（${no}回）
+					</div>
+
+					<form method="post"
+						action="TestRegistExecute.action">
+
+						<!-- hidden -->
+						<input type="hidden"
+							name="subjectCd"
+							value="${subjectCd}" />
+
+						<input type="hidden"
+							name="schoolCd"
+							value="${schoolCd}" />
+
+						<input type="hidden"
+							name="no"
+							value="${no}" />
+
+						<input type="hidden"
+							name="entYear"
+							value="${entYear}" />
+
+						<input type="hidden"
+							name="classNum"
+							value="${classNum}" />
+
+						<!-- 成績一覧 -->
+						<table class="table table-hover w-100">
+
+							<tr>
+								<th>入学年度</th>
+								<th>クラス</th>
+								<th>学生番号</th>
+								<th>氏名</th>
+								<th>点数</th>
+							</tr>
+
+							<c:forEach var="row"
+								items="${tests}"
+								varStatus="s">
+
+								<tr>
+
+									<td>${row.entYear}</td>
+									<td>${row.classNum}</td>
+									<td>${row.studentNo}</td>
+									<td>${row.studentName}</td>
+
+									<!-- 点数入力 -->
+									<td>
+
+										<input type="hidden"
+											name="studentNo_${s.index}"
+											value="${row.studentNo}" />
+
+										<input type="text"
+											name="point_${s.index}"
+											value="${row.point >= 0 ? row.point : ''}"
+											class="form-control w-100" />
+
+										<!-- 点数エラー -->
+										<c:if test="${!empty row.pointError}">
+
+											<div class="text-warning small">
+												${row.pointError}
+											</div>
+
+										</c:if>
+
+									</td>
+
+								</tr>
+
+							</c:forEach>
+
+						</table>
+
+						<!-- 件数 -->
+						<input type="hidden"
+							name="count"
+							value="${tests.size()}" />
+
+						<!-- ボタン -->
+						<button type="submit"
+							class="btn btn-secondary ms-3">
+
+							登録して終了
+
+						</button>
+
+						<button type="button"
+							class="btn btn-outline-secondary ms-2"
+							onclick="window.print()">
+
+							印刷
+
+						</button>
+
+					</form>
+
+				</c:if>
+
+			</div>
+
+		</section>
+
+	</c:param>
+
 </c:import>
