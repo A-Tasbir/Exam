@@ -39,20 +39,18 @@
 						科目コード
 					</label>
 
-					<input type="text"
-						   name="cd"
-						   value="${subject.cd}"
-						   maxlength="3"
-						   required
-						   autocomplete="off"
-						   class="form-control">
+					<div>
+
+						${subject.cd}
+
+					</div>
 
 					<!-- エラーメッセージ -->
-					<c:if test="${not empty errorCd}">
+					<c:if test="${not empty error}">
 
-						<div class="text-danger">
+						<div class="text-warning">
 
-							${errorCd}
+							${error}
 
 						</div>
 

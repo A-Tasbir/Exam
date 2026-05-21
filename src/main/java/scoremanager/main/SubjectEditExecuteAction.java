@@ -15,7 +15,7 @@ public class SubjectEditExecuteAction extends Action {
 
         // パラメータ取得
         String oldCd = req.getParameter("oldCd");
-        String cd = req.getParameter("cd");
+        String cd = req.getParameter("oldCd");
         String name = req.getParameter("name");
 
         // 前後空白除去
@@ -28,6 +28,7 @@ public class SubjectEditExecuteAction extends Action {
         }
 
         // エラーメッセージ
+        String error = "";
         String errorCd = "";
         String errorName = "";
 
@@ -38,26 +39,16 @@ public class SubjectEditExecuteAction extends Action {
 
         // データ存在確認
         if (old == null) {
-            errorName = "科目が存在していません";
+            error = "科目が存在していません";
         }
 
         // =========================
         // 入力チェック
         // =========================
 
-        // 科目コード必須
-        if (cd == null || cd.isEmpty()) {
-            errorCd = "科目コードを入力してください";
-        }
-
         // 科目名必須
         if (name == null || name.isEmpty()) {
             errorName = "科目名を入力してください";
-        }
-
-        // 科目コード文字数
-        if (cd != null && cd.length() > 3) {
-            errorCd = "科目コードは3文字以内で入力してください";
         }
 
         // 科目名文字数
@@ -65,20 +56,12 @@ public class SubjectEditExecuteAction extends Action {
             errorName = "科目名は20文字以内で入力してください";
         }
 
-        // 科目コード重複チェック
-        if (!oldCd.equals(cd)) {
-
-            Subject exists = dao.get("oom", cd);
-
-            if (exists != null) {
-                errorCd = "科目コードが重複しています";
-            }
-        }
-
         // =========================
         // エラー時
         // =========================
-        if (!errorCd.isEmpty() || !errorName.isEmpty()) {
+        if (!error.isEmpty()
+                || !errorCd.isEmpty()
+                || !errorName.isEmpty()) {
 
             Subject subject = new Subject();
 
@@ -90,6 +73,7 @@ public class SubjectEditExecuteAction extends Action {
             req.setAttribute("subject", subject);
 
             // エラーメッセージ設定
+            req.setAttribute("error", error);
             req.setAttribute("errorCd", errorCd);
             req.setAttribute("errorName", errorName);
 
