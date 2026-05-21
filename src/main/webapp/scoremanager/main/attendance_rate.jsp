@@ -233,6 +233,12 @@
 					</div>
 
 				</c:if>
+				<!-- データなし -->
+				<c:if test="${searched and empty rows}">
+    				<div class="alert alert-danger ms-3">
+    					該当するデータがありません。
+					</div>
+				</c:if>
 
 				<!-- =========================
 				     一覧表示
