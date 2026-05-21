@@ -1,66 +1,77 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java"
+	contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
 <c:import url="/common/base.jsp">
-	<c:param name="title">得点管理システム</c:param>
+
+	<c:param name="title">
+		得点管理システム
+	</c:param>
 
 	<c:param name="content">
+
 		<section style="width: 100%; max-width: 100%;">
 
-			<!-- HEADER -->
-			<div
-				class="d-flex justify-content-between align-items-center bg-secondary bg-opacity-10 py-2 px-4 mb-3 w-100">
+			<!-- =========================
+			     ヘッダー
+			========================= -->
+			<div class="d-flex justify-content-between
+						align-items-center
+						bg-secondary bg-opacity-10
+						py-2 px-4 mb-3 w-100">
 
 				<h2 class="h3 mb-0 fw-normal">
-					成績一覧(科目)
+					成績一覧（科目）
 				</h2>
 
 			</div>
 
-			<!-- ===================== SEARCH AREA ===================== -->
-
+			<!-- =========================
+			     検索エリア
+			========================= -->
 			<div class="px-4 mb-3 w-100 pb-3 pt-3"
-				style="border: 1px solid #000;">
+				 style="border: 1px solid #000;">
 
-				<!-- ===== TOP SEARCH（科目別）===== -->
-
+				<!-- =====================
+				     科目検索
+				===================== -->
 				<form method="get"
-					action="TestListSubjectExecute.action">
+					  action="TestListSubjectExecute.action">
 
 					<div class="d-flex align-items-center gap-4 mb-3">
 
 						<div class="fw-bold"
-							style="min-width: 90px;">
+							 style="min-width: 90px;">
 
 							科目情報
 
 						</div>
 
-						<div class="d-flex align-items-end gap-3 flex-wrap w-100">
+						<div class="d-flex align-items-end
+									gap-3 flex-wrap w-100">
 
 							<!-- 入学年度 -->
-
 							<div>
 
 								<label class="form-label mb-1">
 									入学年度
 								</label>
 
-								<select
-									name="admissionYear"
-									class="form-select"
-									style="width: 140px; height: 38px;">
+								<select name="admissionYear"
+										class="form-select"
+										style="width: 140px; height: 38px;">
 
 									<option value="">
 										----------
 									</option>
 
 									<c:forEach var="y"
-										items="${entYearList}">
+											   items="${entYearList}">
 
 										<option value="${y}"
-											${selectedF1 eq y ? 'selected' : '' }>
+											${selectedF1 eq y ? 'selected' : ''}>
 
 											${y}
 
@@ -73,24 +84,22 @@
 							</div>
 
 							<!-- クラス -->
-
 							<div>
 
 								<label class="form-label mb-1">
 									クラス
 								</label>
 
-								<select
-									name="classNo"
-									class="form-select"
-									style="width: 140px; height: 38px;">
+								<select name="classNo"
+										class="form-select"
+										style="width: 140px; height: 38px;">
 
 									<option value="">
 										----------
 									</option>
 
 									<c:forEach var="c"
-										items="${classList}">
+											   items="${classList}">
 
 										<option value="${c}"
 											${selectedF2 eq c ? 'selected' : ''}>
@@ -106,24 +115,22 @@
 							</div>
 
 							<!-- 科目 -->
-
 							<div>
 
 								<label class="form-label mb-1">
 									科目
 								</label>
 
-								<select
-									name="subjectCode"
-									class="form-select"
-									style="width: 300px; height: 38px;">
+								<select name="subjectCode"
+										class="form-select"
+										style="width: 300px; height: 38px;">
 
 									<option value="">
 										----------
 									</option>
 
 									<c:forEach var="sub"
-										items="${subjectList}">
+											   items="${subjectList}">
 
 										<option value="${sub.cd}"
 											${selectedF3 eq sub.cd ? 'selected' : ''}>
@@ -139,12 +146,11 @@
 							</div>
 
 							<!-- 検索ボタン -->
-
 							<div class="ms-auto">
 
 								<button type="submit"
-									class="btn btn-secondary"
-									style="width: 90px; height: 38px;">
+										class="btn btn-secondary"
+										style="width: 90px; height: 38px;">
 
 									検索
 
@@ -158,37 +164,41 @@
 
 				</form>
 
-				<!-- エラー -->
-
+				<!-- エラーメッセージ -->
 				<c:if test="${not empty errorMessage}">
 
 					<div class="px-4 mb-3 text-warning">
 
 						<div>
+
 							${errorMessage}
+
 						</div>
 
 					</div>
 
 				</c:if>
 
-				<hr
-					style="border-top: 1px solid #000; opacity: 1; margin: 16px 0;">
+				<hr style="border-top: 1px solid #000;
+						   opacity: 1;
+						   margin: 16px 0;">
 
-				<!-- ===== BOTTOM SEARCH（学生別）===== -->
-
+				<!-- =====================
+				     学生検索
+				===================== -->
 				<form method="get"
-					action="TestListStudentExecute.action">
+					  action="TestListStudentExecute.action">
 
 					<div class="d-flex align-items-center gap-4">
 
 						<div class="fw-bold"
-							style="min-width: 90px;">
+							 style="min-width: 90px;">
 
 							学生情報
 
 						</div>
 
+						<!-- 学籍番号 -->
 						<div>
 
 							<label class="form-label mb-1">
@@ -196,18 +206,19 @@
 							</label>
 
 							<input type="text"
-								name="studentNo"
-								class="form-control"
-								style="width: 220px; height: 38px;"
-								required>
+								   name="studentNo"
+								   class="form-control"
+								   style="width: 220px; height: 38px;"
+								   required>
 
 						</div>
 
+						<!-- 検索ボタン -->
 						<div class="pt-4">
 
 							<button type="submit"
-								class="btn btn-secondary"
-								style="width: 90px; height: 38px;">
+									class="btn btn-secondary"
+									style="width: 90px; height: 38px;">
 
 								検索
 
@@ -221,8 +232,9 @@
 
 			</div>
 
-			<!-- ===================== RESULT ===================== -->
-
+			<!-- =========================
+			     成績一覧
+			========================= -->
 			<c:if test="${testList.size() > 0}">
 
 				<div class="px-4 w-100">
@@ -233,12 +245,29 @@
 
 							<tr>
 
-								<th>入学年度</th>
-								<th>クラス</th>
-								<th>学生番号</th>
-								<th>氏名</th>
-								<th>1回</th>
-								<th>2回</th>
+								<th>
+									入学年度
+								</th>
+
+								<th>
+									クラス
+								</th>
+
+								<th>
+									学生番号
+								</th>
+
+								<th>
+									氏名
+								</th>
+
+								<th>
+									1回
+								</th>
+
+								<th>
+									2回
+								</th>
 
 							</tr>
 
@@ -247,30 +276,41 @@
 						<tbody>
 
 							<c:forEach var="row"
-								items="${testList}">
+									   items="${testList}">
 
 								<tr>
 
-									<td>${row.entYear}</td>
+									<td>
+										${row.entYear}
+									</td>
 
-									<td>${row.classNum}</td>
+									<td>
+										${row.classNum}
+									</td>
 
-									<td>${row.studentNo}</td>
+									<td>
+										${row.studentNo}
+									</td>
 
-									<td>${row.studentName}</td>
+									<td>
+										${row.studentName}
+									</td>
 
 									<!-- 1回 -->
-
 									<td>
 
 										<c:choose>
 
 											<c:when test="${empty row.score1}">
+
 												-
+
 											</c:when>
 
 											<c:otherwise>
+
 												${row.score1}
+
 											</c:otherwise>
 
 										</c:choose>
@@ -278,17 +318,20 @@
 									</td>
 
 									<!-- 2回 -->
-
 									<td>
 
 										<c:choose>
 
 											<c:when test="${empty row.score2}">
+
 												-
+
 											</c:when>
 
 											<c:otherwise>
+
 												${row.score2}
+
 											</c:otherwise>
 
 										</c:choose>
@@ -307,8 +350,7 @@
 
 			</c:if>
 
-			<!-- BACK -->
-
+			<!-- 戻る -->
 			<div class="px-4 mt-3">
 
 				<a href="Menu.action">
