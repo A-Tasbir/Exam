@@ -1,0 +1,55 @@
+name: Chess APK Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - chess-apk-build-v1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reconstruct Android source
+        shell: bash
+        run: |
+          cat chess-apk-src.b64.00 chess-apk-src.b64.01 chess-apk-src.b64.015 chess-apk-src.b64.02 chess-apk-src.b64.03 chess-apk-src.b64.04 > chess-apk-source.b64
+          base64 -d chess-apk-source.b64 > ChessMoveAdvisor_Android_V1_source.zip
+          echo "201ca9417c062d2d280bad1a15c9d108ce15c970096e2ad5691418f8e94e88ec  ChessMoveAdvisor_Android_V1_source.zip" | sha256sum -c -
+          unzip -q ChessMoveAdvisor_Android_V1_source.zip
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build debug APK
+        working-directory: ChessMoveAdvisor_Android_V1
+        run: gradle --no-daemon :app:assembleDebug
+
+      - name: Verify APK
+        shell: bash
+        run: |
+          test -f ChessMoveAdvisor_Android_V1/app/build/outputs/apk/debug/app-debug.apk
+          unzip -t ChessMoveAdvisor_Android_V1/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChessMoveAdvisor-Android-debug
+          path: ChessMoveAdvisor_Android_V1/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
